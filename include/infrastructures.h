@@ -11,6 +11,7 @@ private:
 
 public:
     Classroom();        //constructor
+    ~Classroom();
     void set_ids(int floorId,int classId){      //set data
         this->floorId=floorId;
         this->classId=classId;
@@ -29,7 +30,7 @@ public:
     void place(Teacher& );  //place a teacher to the classroom
     void print();
     int get_available_space();     //get capacity shows how much space lefts;  
-
+    bool get_teacher_in();
 };
 
 //---------------------------------------------------------------
@@ -41,6 +42,7 @@ private:
 
 public:
     Corridor();     //constructor
+    ~Corridor();
     void set_capacity(int capacity){    
         if(this->capacity ==-1)
             this->capacity=capacity;
@@ -83,6 +85,7 @@ private:
 
 public:
     Schoolyard();   //constructor
+    ~Schoolyard();
     void set_capacity(int capacity){
         if(this->capacity ==-1)
             this->capacity=capacity;
@@ -101,6 +104,7 @@ private:
 
 public:
     Stairs();
+    ~Stairs();
     void set_capacity(int capacity){
         if(this->capacity ==-1)
             this->capacity=capacity;

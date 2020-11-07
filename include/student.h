@@ -36,5 +36,11 @@ public:
         this->inClassroom=b;
     }
     void print(){cout<<"The Teacher is: "<<name<<endl;}     //a simple print method
+    void get_data(int& floorId,int& classId){
+        floorId=this->floorId;
+        classId=this->classId; 
+    }
+    bool in_classroom();
+    string get_name();
 };
 

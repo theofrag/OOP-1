@@ -11,6 +11,7 @@ int main(void){
     
     School school(10,100,100,100);
     Student* stud[18*N];
+    Teacher* teachers[18];
     int count=0;
     for(int i=0;i<N;i++){
 
@@ -19,12 +20,21 @@ int main(void){
                 stud[count]=new Student("student "+ to_string(count),j,k);
                 count++;}
         }
-
-
-        // stud[i]= new Student("student "+ to_string(i),2,rand()%6);
     }
+        count=0;
+        for(int j=0;j<3;j++){
+            for(int k=0;k<6;k++){
+                teachers[count]=new Teacher("Teacher "+ to_string(count),j,k);
+                count++;
+            }
+        }
+
+
+
     int end=1;
-    while(end!=0){
+    int div=18;
+    int b=0;
+    while(end!=0 || b==18){
         end=0;
         int i=rand()%180;
 
@@ -44,19 +54,44 @@ int main(void){
             for(int j=0;j<6;j++)
                 end += school.get_floor(i).get_classroom(j).get_available_space();
         
+        // i=rand()%2;
+        
+        // if(i=1 && div>=1){
+        //     int floorId,classId;
+        //     int times=rand()%div;
+        //     for(int k=0;k<=times;k++){
+        //         i=rand()%div;
+        //         teachers[i]->get_data(floorId,classId);
+        //         school.get_floor(floorId).get_classroom(classId).place(*(teachers[i]));
+        //         Teacher* temp= teachers[i];
+        //         teachers[i]=teachers[div-1];
+        //         teachers[div]=temp;
+        //         div--; 
+        //     }
+        // }
+
+        // for(int i=0;i<3;i++){
+        //     for(int j=0;j<6;j++){
+        //         if(school.get_floor(i).get_classroom(j).get_teacher_in()==true)
+        //             b++;
+        //     }
+        // }
         
 
-
         
-    cout<<"--------------------->"<<end<<endl;
+    // cout<<"--------------------->"<<end<<endl;
     
     }
 
 
     school.print();
     
+    for(int i=0;i<N*18;i++)
+        delete stud[i];
     
+    for(int i=0;i<18;i++)
+        delete teachers[i];
 
-
+    
 
 }

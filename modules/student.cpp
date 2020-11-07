@@ -44,3 +44,11 @@ Teacher::Teacher(string name,int floorId,int classId){      //constructor
         <<" "<<"floorId: "<<this->floorId
         <<" "<<"classrooomId: "<<this->classId<<endl;
 }
+
+bool Teacher::in_classroom(){
+    return this->inClassroom;
+}
+
+string Teacher::get_name(){
+    return this->name;
+}

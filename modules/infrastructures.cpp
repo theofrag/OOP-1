@@ -9,8 +9,14 @@ Classroom::Classroom(){         //classroom constuctor
     this->teacherIn=false;      //no teacher in the classroom
     this->students=NULL;        //no students in the classroom
     this->teacher=NULL;
+    
     cout<<"A new classroom has been created! "<<endl;
 }
+
+Classroom::~Classroom(){
+    delete [] students;
+}
+
 
 void Classroom::print(){
 
@@ -21,6 +27,8 @@ void Classroom::print(){
 
     for(int i=0;i<this->space;i++)
         cout<<students[i]->getName()<<endl;
+    if(this->teacherIn==true)
+        cout<<"The teacher is: "<<this->teacher->get_name()<<endl;
 }
 
 void Classroom::enter(Student& s){
@@ -43,10 +51,15 @@ void Classroom::place(Teacher& t){
     this->teacherIn=true;
     t.set_inClassroom(true);
     
+    
 }
 
 int Classroom::get_available_space(){
     return this->capacity-this->space;
+}
+
+bool Classroom::get_teacher_in(){
+    return this->teacherIn;
 }
 
 
@@ -56,6 +69,10 @@ Schoolyard::Schoolyard(){
     this->space=0;
     this->students=NULL;
     cout<<"A new Schoolyard has been created! "<<endl;
+}
+
+Schoolyard::~Schoolyard(){
+    delete [] students;
 }
 
 void Schoolyard::enter(Student& s){
@@ -105,6 +122,10 @@ Stairs::Stairs(){
     this->space=0;
     this->students=NULL;
     cout<<"A new Stairs has been created! "<<endl;
+}
+
+Stairs:: ~Stairs(){
+    delete [] students;
 }
 
 void Stairs::enter(Student& s){
@@ -175,6 +196,10 @@ Corridor::Corridor(){
     this->space=0;
     this->students=NULL;
     cout<<"A new Corridor has been created! "<<endl;
+}
+
+Corridor::~Corridor(){
+    delete [] students;
 }
 
 int Corridor::get_available_space(){
@@ -260,6 +285,7 @@ void School::print(){
         get_floor(i).print();
         for(int j=0;j<6;j++)
             get_floor(i).get_classroom(j).print();
+            
         
     }
 }
