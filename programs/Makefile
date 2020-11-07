@@ -10,7 +10,7 @@ CPPFLAGS = -Wall  -g -I$(INCLUDE)
 LDFLAGS = -lm
 
 # Αρχεία .o
-OBJS = $(MODULES)/student.o main.o 
+OBJS = $(MODULES)/student.o $(MODULES)/infrastructures.o  main.o 
 
 # Το εκτελέσιμο πρόγραμμα
 EXEC = main
