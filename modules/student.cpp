@@ -3,33 +3,44 @@
 
 
 Student::Student(string name,int floorId,int classroomId){
-    this->name = name;
-    this->floorId=floorId;
-    this->classroomId=classroomId;
-    this->location = "NULL"; 
+    this->name = name;      //Student name
+    this->floorId=floorId;  //In which floor, his classroom belongs
+    this->classroomId=classroomId;  //Wich number is his class
+    this->location = "NULL";        //outside of the school
     cout<<"A New Student has been created"<<endl;
 
-    cout<<" Name: "<<this->name
-    <<" "<<"floorId: "<<this->floorId
-    <<" "<<"classrooomId: "<<this->classroomId<<endl;
+    cout<<" Name: "<<this->name     //print name and classroom
+        <<" "<<"floorId: "<<this->floorId
+        <<" "<<"classrooomId: "<<this->classroomId<<endl;
 }
 
-string Student :: getName(){
+string Student :: getName(){        //get student name
         return this->name;
     }
 
-string Student::get_location(){
+string Student::get_location(){     //get student current location
     return this->location;
 }
 
-int Student::get_class(){
+int Student::get_class(){           //get student class number
     return this->classroomId;
     
 }
 
-int Student::get_floor(){
+int Student::get_floor(){           //in which floor student's classroom belongs    
     return this->floorId;
 }
 
 //--------------------------------------------
 
+Teacher::Teacher(string name,int floorId,int classId){      //constructor
+    this->inClassroom=false;    
+    this->floorId=floorId;
+    this->classId=classId;
+    this->name=name;
+    cout<<"A New Teacher has been created!"<<endl;
+    
+    cout<<" Name: "<<this->name     //print name and classroom
+        <<" "<<"floorId: "<<this->floorId
+        <<" "<<"classrooomId: "<<this->classId<<endl;
+}

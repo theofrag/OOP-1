@@ -3,49 +3,53 @@
 class Classroom{
 
 private:
-    int floorId,classId;
-    int capacity,space;
-    Student** students;
-    bool teacherIn;
+    int floorId,classId;  //classroom data     
+    int capacity,space;     //capacity is the max number of students and space show how many students are in the classroom
+    Student** students;     //pointer to an array of pointers, that point to  student classes
+    bool teacherIn;         //if teacher is in class
+    Teacher* teacher;
 
 public:
-    void set_ids(int floorId,int classId){
+    Classroom();        //constructor
+    void set_ids(int floorId,int classId){      //set data
         this->floorId=floorId;
         this->classId=classId;
     }
-    Classroom();
-    void set_capacity(int capacity){
+    void set_capacity(int capacity){    //PRACTICALLY THE USER CANNOT USE THIS FUNCTION
         if(this->capacity ==-1)
             this->capacity=capacity;
     }
 
-    void get_ids(int& floorId,int& classId){
+    void get_ids(int& floorId,int& classId){    //Get data
         floorId = this->floorId;
         classId = this->classId;
     }
-    void enter(Student& );
+
+    void enter(Student& );  //host a student in the classroom
+    void place(Teacher& );  //place a teacher to the classroom
     void print();
+    int get_available_space();     //get capacity shows how much space lefts;  
 
 };
 
 //---------------------------------------------------------------
-class Corridor{
+class Corridor{ 
 
 private:
-    int capacity,space;
-    Student** students;
+    int capacity,space;     //data
+    Student** students;     //array of students
 
 public:
-    Corridor();
-    void set_capacity(int capacity){
-        // if(this->capacity ==-1)
+    Corridor();     //constructor
+    void set_capacity(int capacity){    
+        if(this->capacity ==-1)
             this->capacity=capacity;
 
     }
     void print();
     void enter(Student &s);
-    Student& exit(Student &s);
-    int get_capacity();
+    Student& exit(Student &s);      //expell a student from the corridor
+    int get_available_space();     //how muck space lefts
 
 };
 //----------------------------------------------------------------
@@ -53,16 +57,16 @@ public:
 class Floor{
 
 private:
-    Classroom classrooms[6];
-    Corridor corridor;
-    int floorId;
+    Classroom classrooms[6];    //array of classrooms
+    Corridor corridor;  //the corridor of the floor
+    int floorId;        //
 public:
-    Floor();
-    void set_id(int floorId){
+    Floor();         //   constructor
+    void set_id(int floorId){   //set the number of floor
         this->floorId = floorId;
     }
-    Classroom& get_classroom(int);
-    Corridor& get_corridor();
+    Classroom& get_classroom(int);      //take data of the classroom
+    Corridor& get_corridor();   //<<              >>
     void enter(Student& s);
     void print();
 
@@ -75,18 +79,17 @@ class Schoolyard{
 private:
     int capacity;   //capacity shows the maximum number of students,each yard can host
     int space;      //Space shows how many students are in the yard. Space is increasing
-    Student** students;
+    Student** students;     //array of students
 
 public:
-    Schoolyard();
-    void setCapacity(int);
+    Schoolyard();   //constructor
     void set_capacity(int capacity){
         if(this->capacity ==-1)
             this->capacity=capacity;
     }
     void enter(Student& s);
     Student& exit(Student &s);
-    int get_capacity();
+    int get_available_space(); //how much space is available in the yard
     void print();
 };
 //---------------------------------------------

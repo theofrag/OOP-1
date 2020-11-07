@@ -2,22 +2,31 @@
 #include <ctime>
 #include <cstdlib> 
 
-const int N=40;
+const int N=10;
 
 
 
 int main(void){
     srand(time(nullptr));
     
-    School school(10,10,10,10);
-    Student* stud[N];
-
+    School school(10,100,100,100);
+    Student* stud[18*N];
+    int count=0;
     for(int i=0;i<N;i++){
-        stud[i]= new Student("student "+ to_string(i),rand()%3,rand()%6);
-    }
 
-    for(int j=0;j<5000;j++){
-        int i=rand()%40;
+        for(int j=0;j<3;j++){
+            for(int k=0;k<6;k++){
+                stud[count]=new Student("student "+ to_string(count),j,k);
+                count++;}
+        }
+
+
+        // stud[i]= new Student("student "+ to_string(i),2,rand()%6);
+    }
+    int end=1;
+    while(end!=0){
+        end=0;
+        int i=rand()%180;
 
         if(stud[i]->get_location()=="NULL")
             school.enter(*(stud[i]));
@@ -30,6 +39,17 @@ int main(void){
 
         else if(stud[i]->get_location()=="Corridor")
             school.get_floor(stud[i]->get_floor()).get_classroom(stud[i]->get_class()).enter(school.get_floor(stud[i]->get_floor()).get_corridor().exit(*(stud[i])));  
+       
+        for(int i=0;i<3;i++)
+            for(int j=0;j<6;j++)
+                end += school.get_floor(i).get_classroom(j).get_available_space();
+        
+        
+
+
+        
+    cout<<"--------------------->"<<end<<endl;
+    
     }
 
 
