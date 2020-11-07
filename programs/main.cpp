@@ -1,19 +1,25 @@
 #include "infrastructures.h"
 #include <ctime>
-#include <cstdlib> 
+#include <cstdlib>  
 
-const int N=10;     
+const int N=18;     
 
 
 
-int main(void){
+int main(int argc, char** argv){
+    int Cclass=1;//atoi(argv[1]);
+    int Cyard =1;
+    int Cstair=1;//atoi(argv[3]);
+    int Ccorr=1;//atoi(argv[4]);
+
+
     srand(time(nullptr));
     
-    School school(10,100,100,100);
-    Student* stud[18*N];
+    School school(Cclass,Cyard,Cstair,Ccorr);
+    Student* stud[N*Cclass];
     Teacher* teachers[18];
     int count=0;
-    for(int i=0;i<N;i++){
+    for(int i=0;i<Cclass;i++){
 
         for(int j=0;j<3;j++){
             for(int k=0;k<6;k++){
@@ -34,9 +40,9 @@ int main(void){
     int end=1;
     int div=18;
     int b=0;
-    while(end!=0 || b==18){
+    while(end!=0 || b==17){
         end=0;
-        int i=rand()%180;
+        int i=rand()%(Cclass*N);
 
         if(stud[i]->get_location()=="NULL"){
             if(school.get_schoolyard().get_available_space()>0)
@@ -54,7 +60,7 @@ int main(void){
         } 
 
         else if(stud[i]->get_location()=="Corridor"){
-            if(school.get_floor(stud[i]->get_floor()).get_classroom(stud[i]->get_class()).get_available_space()>0)
+            if(school.get_floor(stud[i]->get_floor()).get_classroom(stud[i]->get_class()).get_available_space() > 0 && school.get_floor(stud[i]->get_floor()).get_classroom(stud[i]->get_class()).get_teacher_in()==false)
                 school.get_floor(stud[i]->get_floor()).get_classroom(stud[i]->get_class()).enter(school.get_floor(stud[i]->get_floor()).get_corridor().exit(*(stud[i]))); 
         } 
        
@@ -62,28 +68,28 @@ int main(void){
             for(int j=0;j<6;j++)
                 end += school.get_floor(i).get_classroom(j).get_available_space();
         
-        // i=rand()%2;
+        i=rand()%2;
         
-        // if(i=1 && div>=1){
-        //     int floorId,classId;
-        //     int times=rand()%div;
-        //     for(int k=0;k<=times;k++){
-        //         i=rand()%div;
-        //         teachers[i]->get_data(floorId,classId);
-        //         school.get_floor(floorId).get_classroom(classId).place(*(teachers[i]));
-        //         Teacher* temp= teachers[i];
-        //         teachers[i]=teachers[div-1];
-        //         teachers[div]=temp;
-        //         div--; 
-        //     }
-        // }
+        if(i=1 && div>=1){
+            int floorId,classId;
+            int times=rand()%div;
+            for(int k=0;k<=times;k++){
+                i=rand()%div;
+                teachers[i]->get_data(floorId,classId);
+                school.get_floor(floorId).get_classroom(classId).place(*(teachers[i]));
+                Teacher* temp= teachers[i];
+                teachers[i]=teachers[div-1];
+                teachers[div]=temp;
+                div--; 
+            }
+        }
 
-        // for(int i=0;i<3;i++){
-        //     for(int j=0;j<6;j++){
-        //         if(school.get_floor(i).get_classroom(j).get_teacher_in()==true)
-        //             b++;
-        //     }
-        // }
+        for(int i=0;i<3;i++){
+            for(int j=0;j<6;j++){
+                if(school.get_floor(i).get_classroom(j).get_teacher_in()==true)
+                    b++;
+            }
+        }
         
 
         
@@ -94,10 +100,10 @@ int main(void){
 
     school.print();
     
-    for(int i=0;i<N*18;i++)
+    for(int i=0;i<Cclass*N;i++)
         delete stud[i];
     
-    for(int i=0;i<18;i++)
+    for(int i=0;i<N;i++)
         delete teachers[i];
 
     

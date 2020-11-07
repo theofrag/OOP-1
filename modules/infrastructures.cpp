@@ -188,7 +188,7 @@ Classroom& Floor::get_classroom(int i){
 }
 
 void Floor::enter(Student& s){
-    if((this->corridor.get_available_space() )!= 0 && s.get_location()== "exited_from_stairs"){
+    if((this->corridor.get_available_space() )> 0 && s.get_location()== "exited_from_stairs"){
         cout<<s.getName()<<" enters Floor"<<endl;  
         this->corridor.enter(s);
     }
@@ -228,7 +228,7 @@ Corridor::~Corridor(){
 }
 
 int Corridor::get_available_space(){
-    return this->capacity;
+    return this->capacity-this->space;
 }
 
 void Corridor::enter(Student& s){
