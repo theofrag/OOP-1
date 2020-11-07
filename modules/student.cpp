@@ -14,6 +14,12 @@ Student::Student(string name,int floorId,int classroomId){
         <<" "<<"classrooomId: "<<this->classroomId<<endl;
 }
 
+Student::~Student(){
+    cout<<"A student to be destroyed whith name: "<<this->name<<" classroom: "
+        <<this->floorId <<"."<<this->classroomId<<" and location: "<<this->location<<endl;
+}
+
+
 string Student :: getName(){        //get student name
         return this->name;
     }
@@ -43,6 +49,12 @@ Teacher::Teacher(string name,int floorId,int classId){      //constructor
     cout<<" Name: "<<this->name     //print name and classroom
         <<" "<<"floorId: "<<this->floorId
         <<" "<<"classrooomId: "<<this->classId<<endl;
+}
+
+Teacher:: ~Teacher(){
+
+    cout<<"A teacher to be destroyed whith name: "<<this->name<<" classroom: "
+        <<this->floorId <<"."<<this->classId<<endl;
 }
 
 bool Teacher::in_classroom(){

@@ -2,7 +2,7 @@
 #include <ctime>
 #include <cstdlib> 
 
-const int N=10;
+const int N=10;     
 
 
 
@@ -38,17 +38,25 @@ int main(void){
         end=0;
         int i=rand()%180;
 
-        if(stud[i]->get_location()=="NULL")
-            school.enter(*(stud[i]));
+        if(stud[i]->get_location()=="NULL"){
+            if(school.get_schoolyard().get_available_space()>0)
+                school.enter(*(stud[i]));
+        }
         
-        else if(stud[i]->get_location()=="schoolYard")
-            school.get_stairs().enter(school.get_schoolyard().exit(*(stud[i]))); 
+        else if(stud[i]->get_location()=="schoolYard"){
+            if(school.get_stairs().get_available_space()>0)
+                school.get_stairs().enter(school.get_schoolyard().exit(*(stud[i]))); 
+        }
 
-        else if(stud[i]->get_location()=="Stairs")
-            school.get_floor(stud[i]->get_floor()).enter(school.get_stairs().exit(*(stud[i])));  
+        else if(stud[i]->get_location()=="Stairs"){
+            if(school.get_floor(stud[i]->get_floor()).get_corridor().get_available_space()>0)
+                school.get_floor(stud[i]->get_floor()).enter(school.get_stairs().exit(*(stud[i]))); 
+        } 
 
-        else if(stud[i]->get_location()=="Corridor")
-            school.get_floor(stud[i]->get_floor()).get_classroom(stud[i]->get_class()).enter(school.get_floor(stud[i]->get_floor()).get_corridor().exit(*(stud[i])));  
+        else if(stud[i]->get_location()=="Corridor"){
+            if(school.get_floor(stud[i]->get_floor()).get_classroom(stud[i]->get_class()).get_available_space()>0)
+                school.get_floor(stud[i]->get_floor()).get_classroom(stud[i]->get_class()).enter(school.get_floor(stud[i]->get_floor()).get_corridor().exit(*(stud[i]))); 
+        } 
        
         for(int i=0;i<3;i++)
             for(int j=0;j<6;j++)

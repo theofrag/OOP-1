@@ -11,6 +11,7 @@ private:
 
 public:
     Student(string name,int floorId,int classroomId);   //constructor
+    ~Student();
     void print(){cout<<name<<endl;} //a simple print function
     void setLocation(string location){  //set the location of the student
         this->location=location;   
@@ -32,6 +33,7 @@ private:
 
 public:
     Teacher(string name,int floorId,int classId);   //constructor
+    ~Teacher();
     void set_inClassroom(bool b){   //set if the teacher is at the classroom
         this->inClassroom=b;
     }
