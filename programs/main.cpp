@@ -13,7 +13,7 @@ int main(int argc, char** argv){
     int Cclass=1;//atoi(argv[1]);
     int Cyard =1;
     int Cstair=1;//atoi(argv[3]);
-    int Ccorr=1;//atoi(argv[4]);
+    int Ccorr=10;//atoi(argv[4]);
 
 
     srand(time(nullptr));
@@ -45,7 +45,7 @@ int main(int argc, char** argv){
     int b=0;
 
 
-    while(end!=0 || b==17){
+    while(end!=0){
         end=0;
         int i=rand()%(Cclass*N);
 
@@ -73,33 +73,24 @@ int main(int argc, char** argv){
             for(int j=0;j<6;j++)
                 end += school.get_floor(i).get_classroom(j).get_available_space();
         
-        // i=rand()%2;
+        i=rand()%2;
         
-        // if(i=1 && div>=1){
-        //     int floorId,classId;
-        //     int times=rand()%div;
-        //     for(int k=0;k<=times;k++){
-        //         i=rand()%div;
-        //         teachers[i]->get_data(floorId,classId);
-        //         school.get_floor(floorId).get_classroom(classId).place(*(teachers[i]));
-        //         Teacher* temp= teachers[i];
-        //         teachers[i]=teachers[div-1];
-        //         teachers[div]=temp;
-        //         div--; 
-        //     }
-        // }
-
-        // for(int i=0;i<3;i++){
-        //     for(int j=0;j<6;j++){
-        //         if(school.get_floor(i).get_classroom(j).get_teacher_in()==true)
-        //             b++;
-        //     }
-        // }
+        if(i=1 && div>=1){
+            int floorId,classId;
+            int times=rand()%div;
+            for(int k=0;k<=times;k++){
+                i=rand()%div;
+                teachers[i]->get_data(floorId,classId);
+                school.get_floor(floorId).get_classroom(classId).place(*(teachers[i]));
+                Teacher* temp= teachers[i];
+                teachers[i]=teachers[div-1];
+                teachers[div-1]=temp;
+                div--; 
+            }
+        }
         
-
-        
-    // cout<<"--------------------->"<<end<<endl;
-    
+    if(div==0)
+        break;
     }
 
 

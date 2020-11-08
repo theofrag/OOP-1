@@ -8,6 +8,7 @@ class Student{
 private:
     string name,location;   //name of student and his location
     int floorId , classroomId;  //classroom
+        
 
 public:
     Student(string name,int floorId,int classroomId);   //constructor

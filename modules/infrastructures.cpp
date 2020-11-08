@@ -41,7 +41,7 @@ void Classroom::enter(Student& s){
     students[space]=&s;
     this->space++;
     cout<<s.getName()<< " enters Classroom!"<<endl;
-  
+    
     s.setLocation("Classroom");     //update student location
 }
 
@@ -205,11 +205,11 @@ void Floor::print(){
 Floor::Floor(int Ccorr,int Cclass,int floorId){
     this->Ccorr=Ccorr;
     this->Cclass=Cclass;
-    this->corridor=new Corridor(Cclass);
-    
     int k=0;
     for(int i=0;i<6;i++)
         this->classrooms[i]=new Classroom(this->Cclass,k++,i);
+    
+    this->corridor=new Corridor(Cclass);
     
 }
 
@@ -283,7 +283,6 @@ void Corridor::print(){
 //------------------------------------------------
 
 School ::School(int Cclass,int Cyard,int Cstairs, int Ccorr){   //school constuctor
-    cout<<"A new school has been created! "<<endl;
     this->Cclass=Cclass;        //capacities 
     this->Cyard=Cyard;
     this->Cstair=Cstairs;
@@ -292,8 +291,9 @@ School ::School(int Cclass,int Cyard,int Cstairs, int Ccorr){   //school constuc
     for(int i=0;i<3;i++)
         this->floors[i]=new Floor(Cstairs, Cclass,i);
 
-    this->schoolyard=new Schoolyard(Cyard);
     this->stairs=new Stairs(Cstairs);
+    this->schoolyard=new Schoolyard(Cyard);
+    cout<<"A new school has been created! "<<endl;
 }
 
 School::~School(){

@@ -55,6 +55,7 @@ Teacher:: ~Teacher(){
 
     cout<<"A teacher to be destroyed whith name: "<<this->name<<" classroom: "
         <<this->floorId <<"."<<this->classId<<endl;
+        
 }
 
 bool Teacher::in_classroom(){
