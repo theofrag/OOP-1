@@ -1,10 +1,10 @@
 #include "infrastructures.h"
 
 
-Classroom::Classroom(){         //classroom constuctor
-    this->floorId=0;            //initialize with zero
-    this->classId=0;
-    this->capacity=-1;
+Classroom::Classroom(int Cclass,int floorId,int classId){         //classroom constuctor
+    this->floorId=floorId;
+    this->classId=classId;
+    this->capacity=Cclass;
     this->space=0;              //no one is inside
     this->teacherIn=false;      //no teacher in the classroom
     this->students=NULL;        //no students in the classroom
@@ -21,9 +21,7 @@ Classroom::~Classroom(){        //free memory
 
 void Classroom::print(){
 
-    int floorId,classId;
-    this->get_ids(floorId,classId);     //get classroom ids
-    cout<<"People in class "<<floorId<<"."<<classId<<" are: "<<endl;
+    cout<<"People in class "<<this->floorId<<"."<<this->classId<<" are: "<<endl;
 
 
     for(int i=0;i<this->space;i++)  //print students
@@ -69,8 +67,8 @@ bool Classroom::get_teacher_in(){       //if teacher is in the classroom or not
 //---------------------------------------------------------------
 //---------------------------------------------------------------
 
-Schoolyard::Schoolyard(){
-    this->capacity=0;      //initialize values
+Schoolyard::Schoolyard(int Cyard){
+    this->capacity=Cyard;      //initialize values
     this->space=0;
     this->students=NULL;
     cout<<"A new Schoolyard has been created! "<<endl;
@@ -128,14 +126,14 @@ void Schoolyard::print(){
 //---------------------------------------------------------------
 //---------------------------------------------------------------
 //---------------------------------------------------------------
-Stairs::Stairs(){
-    this->capacity=0;
+Stairs::Stairs(int Cstairs){
+    this->capacity=Cstairs;
     this->space=0;
     this->students=NULL;
     cout<<"A new Stairs has been created! "<<endl;
 }
 
-Stairs:: ~Stairs(){
+Stairs::~Stairs(){
     cout<<"Stairs to be destroyed"<<endl;
     delete [] students;
 }
@@ -184,30 +182,44 @@ int Stairs::get_available_space(){
 //---------------------------------------------------------------
 //-----------------------------------------------------
 Classroom& Floor::get_classroom(int i){
-    return classrooms[i];
+    return *(this->classrooms[i]);
 }
 
 void Floor::enter(Student& s){
-    if((this->corridor.get_available_space() )> 0 && s.get_location()== "exited_from_stairs"){
+    if((this->corridor->get_available_space() )> 0 && s.get_location()== "exited_from_stairs"){
         cout<<s.getName()<<" enters Floor"<<endl;  
-        this->corridor.enter(s);
+        this->corridor->enter(s);
     }
     return;
 }
 
 Corridor& Floor::get_corridor(){
-    return this->corridor;
+    return *(this->corridor);
 }
 
 
 void Floor::print(){
-    this->corridor.print();
+    this->corridor->print();
 }
 
-Floor::Floor(){
+Floor::Floor(int Ccorr,int Cclass,int floorId){
+    this->Ccorr=Ccorr;
+    this->Cclass=Cclass;
+    this->corridor=new Corridor(Cclass);
+    
+    int k=0;
+    for(int i=0;i<6;i++)
+        this->classrooms[i]=new Classroom(this->Cclass,k++,i);
+    
+}
 
-    // for(int i=0;i<6;i++)
-    //     this->classrooms[i].set_ids(2,i);
+Floor::~Floor(){
+
+    cout<<"A floor to be destroyed"<<endl;
+
+    for(int i=0;i<6;i++)
+        delete  (this->classrooms[i]);
+    delete this->corridor;
 }
 
 //---------------------------------------------------------------
@@ -215,8 +227,8 @@ Floor::Floor(){
 //---------------------------------------------------------------
 //---------------------------------------------------------------
 //------------------------------------------------
-Corridor::Corridor(){
-    this->capacity=-1;
+Corridor::Corridor(int Ccorr){
+    this->capacity=Ccorr;
     this->space=0;
     this->students=NULL;
     cout<<"A new Corridor has been created! "<<endl;
@@ -276,39 +288,43 @@ School ::School(int Cclass,int Cyard,int Cstairs, int Ccorr){   //school constuc
     this->Cyard=Cyard;
     this->Cstair=Cstairs;
     this->Ccorr=Ccorr;
-    
-    for(int i=0;i<3;i++){   //set capacity of corridors,id of floors, id of classrooms,capacity of classrooms
-        this->floors[i].get_corridor().set_capacity(this->Ccorr);
-        floors[i].set_id(i);
-        for(int j=0;j<6;j++){
-            floors[i].get_classroom(j).set_ids(i,j);
-            this->floors[i].get_classroom(j).set_capacity(this->Cclass);}
-    
-    }
-    
-    this->schoolyard.set_capacity(this->Cyard);
-    this->stairs.set_capacity(this->Cstair);
+
+    for(int i=0;i<3;i++)
+        this->floors[i]=new Floor(Cstairs, Cclass,i);
+
+    this->schoolyard=new Schoolyard(Cyard);
+    this->stairs=new Stairs(Cstairs);
+}
+
+School::~School(){
+    cout<<"A school to be destroyed"<<endl;
+
+    for(int i=0;i<3;i++)
+        delete this->floors[i];
+
+    delete this->stairs;
+    delete this->schoolyard;
 }
 
 Schoolyard& School::get_schoolyard(){
-    return this->schoolyard;
+    return *(this->schoolyard);
 }
 Stairs& School::get_stairs(){
-    return this->stairs;
+    return *(this->stairs);
 }
 
 
 void School::enter(Student& s){
-    if((this->schoolyard.get_available_space())!=0){
+    if((this->schoolyard->get_available_space())!=0){
         cout<<s.getName()<<" enters school"<<endl;
-        schoolyard.enter(s);
+        schoolyard->enter(s);
 
     }
 }
 void School::print(){
     cout<<"School life consists of:  "<<endl;
-    this->schoolyard.print();
-    this->stairs.print();
+    this->schoolyard->print();
+    this->stairs->print();
     for(int i=0;i< 3;i++){
         cout<<"Floor number "<<i<<"  contains: "<<endl;
         get_floor(i).print();
@@ -320,7 +336,7 @@ void School::print(){
 }
 
 Floor& School::get_floor(int i){
-    return this->floors[i];
+    return *(this->floors[i]);
 
 }
 

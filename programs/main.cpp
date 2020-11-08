@@ -2,6 +2,9 @@
 #include <ctime>
 #include <cstdlib>  
 
+
+
+
 const int N=18;     
 
 
@@ -40,6 +43,8 @@ int main(int argc, char** argv){
     int end=1;
     int div=18;
     int b=0;
+
+
     while(end!=0 || b==17){
         end=0;
         int i=rand()%(Cclass*N);
@@ -68,28 +73,28 @@ int main(int argc, char** argv){
             for(int j=0;j<6;j++)
                 end += school.get_floor(i).get_classroom(j).get_available_space();
         
-        i=rand()%2;
+        // i=rand()%2;
         
-        if(i=1 && div>=1){
-            int floorId,classId;
-            int times=rand()%div;
-            for(int k=0;k<=times;k++){
-                i=rand()%div;
-                teachers[i]->get_data(floorId,classId);
-                school.get_floor(floorId).get_classroom(classId).place(*(teachers[i]));
-                Teacher* temp= teachers[i];
-                teachers[i]=teachers[div-1];
-                teachers[div]=temp;
-                div--; 
-            }
-        }
+        // if(i=1 && div>=1){
+        //     int floorId,classId;
+        //     int times=rand()%div;
+        //     for(int k=0;k<=times;k++){
+        //         i=rand()%div;
+        //         teachers[i]->get_data(floorId,classId);
+        //         school.get_floor(floorId).get_classroom(classId).place(*(teachers[i]));
+        //         Teacher* temp= teachers[i];
+        //         teachers[i]=teachers[div-1];
+        //         teachers[div]=temp;
+        //         div--; 
+        //     }
+        // }
 
-        for(int i=0;i<3;i++){
-            for(int j=0;j<6;j++){
-                if(school.get_floor(i).get_classroom(j).get_teacher_in()==true)
-                    b++;
-            }
-        }
+        // for(int i=0;i<3;i++){
+        //     for(int j=0;j<6;j++){
+        //         if(school.get_floor(i).get_classroom(j).get_teacher_in()==true)
+        //             b++;
+        //     }
+        // }
         
 
         
