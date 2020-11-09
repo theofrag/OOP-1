@@ -1,0 +1,30 @@
+# paths
+INCLUDE = ../../include
+MODULES=../../modules
+
+# compiler
+CC = g++
+
+# Compile options. Το -I<dir> λέει στον compiler να αναζητήσει εκεί include files
+CPPFLAGS = -Wall  -g -I$(INCLUDE)
+LDFLAGS = -lm	
+
+# Αρχεία .o
+OBJS = $(MODULES)/hw2.o main.o 
+
+# Το εκτελέσιμο πρόγραμμα
+EXEC = main
+
+
+$(EXEC): $(OBJS)
+	$(CC) $(OBJS) -o $(EXEC) $(LDFLAGS)
+
+
+clean:
+	rm -f $(OBJS) $(EXEC)
+
+run: $(EXEC)
+	./$(EXEC) $(ARGS)
+
+valgrind:
+	valgrind ./$(EXEC)

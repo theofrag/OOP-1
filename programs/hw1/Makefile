@@ -1,6 +1,6 @@
 # paths
-INCLUDE = ../include
-MODULES=../modules
+INCLUDE = ../../include
+MODULES=../../modules
 
 # compiler
 CC = g++
@@ -29,5 +29,5 @@ clean:
 run: $(EXEC)
 	./$(EXEC) $(ARGS)
 
-valgrind:
+valgrind: run
 	valgrind ./$(EXEC)

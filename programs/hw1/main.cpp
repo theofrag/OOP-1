@@ -75,7 +75,7 @@ int main(int argc, char** argv){
         
         i=rand()%2;
         
-        if(i=1 && div>=1){
+        if(i==1 && div>=1){
             int floorId,classId;
             int times=rand()%div;
             for(int k=0;k<=times;k++){

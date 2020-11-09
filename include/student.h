@@ -18,7 +18,7 @@ public:
         this->location=location;   
     }
     string getName();   //function to get the name of a student
-    string get_location();  //where is the student
+    string get_location();  //get the location of the student
     int get_class();   //get his class number
     int get_floor();    //get the floor ,where the class belongs
 
