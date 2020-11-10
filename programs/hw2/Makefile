@@ -26,5 +26,5 @@ clean:
 run: $(EXEC)
 	./$(EXEC) $(ARGS)
 
-valgrind:
+valgrind: run
 	valgrind ./$(EXEC)

@@ -45,13 +45,7 @@ void Classroom::enter(Student& s){
     s.setLocation("Classroom");     //update student location
 }
 
-void Classroom::place(Teacher& t){
-    this->teacher=&t;
-    this->teacherIn=true;
-    t.set_inClassroom(true);
-    
-    
-}
+
 
 int Classroom::get_available_space(){
     return this->capacity-this->space;
@@ -80,7 +74,7 @@ Schoolyard::~Schoolyard(){
 }
 
 void Schoolyard::enter(Student& s){
-    if(this->students==NULL){ cout<<"aaaaaa"<<endl;      //if space is not allocated
+    if(this->students==NULL){      //if space is not allocated
         students= new Student*[this->capacity];}
     if(this->space==this->capacity)
         return;
@@ -175,25 +169,33 @@ int Stairs::get_available_space(){
 //---------------------------------------------------------------
 //---------------------------------------------------------------
 //-----------------------------------------------------
-Classroom& Floor::get_classroom(int i){
-    return *(this->classrooms[i]);
-}
+
 
 void Floor::enter(Student& s){
+    Student* stud;
     if((this->corridor->get_available_space() )> 0 && s.get_location()== "exited_from_stairs"){
         cout<<s.getName()<<" enters Floor"<<endl;  
         this->corridor->enter(s);
+        if(this->classrooms[s.get_class()]->get_available_space()>0 && this->classrooms[s.get_class()]->get_teacher_in()==false){
+            stud=&(this->corridor->exit());
+            this->classrooms[s.get_class()]->enter(*stud);
+        }
     }
     return;
 }
 
-Corridor& Floor::get_corridor(){
-    return *(this->corridor);
+void Floor::place(Teacher& s){
+    int floorId,classId;
+    s.get_data(floorId,classId);
+    this->classrooms[classId]->place(s);
 }
+
 
 
 void Floor::print(){
     this->corridor->print();
+    for(int i=0;i<6;i++)
+        this->classrooms[i]->print();
 }
 
 Floor::Floor(int Ccorr,int Cclass,int floorId){
@@ -214,6 +216,10 @@ Floor::~Floor(){
     for(int i=0;i<6;i++)
         delete  (this->classrooms[i]);
     delete this->corridor;
+}
+
+int Floor::get_available_space(){
+    return this->corridor->get_available_space();
 }
 
 //---------------------------------------------------------------
@@ -249,6 +255,7 @@ void Corridor::enter(Student& s){
     (this->space)++;
     cout<<s.getName()<< " enters Corridor!"<<endl;
     s.setLocation("Corridor");
+    
 }
 
 Student& Corridor::exit(){
@@ -297,20 +304,31 @@ School::~School(){
     delete this->schoolyard;
 }
 
-Schoolyard& School::get_schoolyard(){
-    return *(this->schoolyard);
-}
-Stairs& School::get_stairs(){
-    return *(this->stairs);
-}
+
 
 
 void School::enter(Student& s){
-    if((this->schoolyard->get_available_space())!=0){
+    Student* stud;
+    if((this->schoolyard->get_available_space())>0){
         cout<<s.getName()<<" enters school"<<endl;
         schoolyard->enter(s);
+        if(this->stairs->get_available_space()>0){
+            stud=&(this->schoolyard->exit());
+            this->stairs->enter(*stud);
+            if(this->floors[stud->get_floor()]->get_available_space()>0){
+                stud=&(this->stairs->exit());
+                this->floors[stud->get_floor()]->enter(*stud);
+            }
+            
+        }
 
     }
+}
+
+void School::place(Teacher& t){
+    int floorId, classId;
+    t.get_data(floorId,classId);
+    this->floors[floorId]->place(t);  
 }
 void School::print(){
     cout<<"School life consists of:  "<<endl;
@@ -318,17 +336,8 @@ void School::print(){
     this->stairs->print();
     for(int i=0;i< 3;i++){
         cout<<"Floor number "<<i<<"  contains: "<<endl;
-        get_floor(i).print();
-        for(int j=0;j<6;j++)
-            get_floor(i).get_classroom(j).print();
-            
-        
+        this->floors[i]->print();  
     }
-}
-
-Floor& School::get_floor(int i){
-    return *(this->floors[i]);
-
 }
 
 //---------------------------------------------------------------

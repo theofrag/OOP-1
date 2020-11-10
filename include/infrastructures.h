@@ -15,7 +15,11 @@ public:
     bool get_teacher_in();          //if teacher is in the classroom
     int get_available_space();     //get capacity shows how much space lefts;  
     void enter(Student& );          //host a student in the classroom
-    void place(Teacher& );          //place a teacher to the classroom
+    void place(Teacher& teacher){
+        this->teacher=&teacher;
+        this->teacherIn=true;
+    }
+    
     void print();                   //print teacher and students
 };
 //---------------------------------------------------------------
@@ -52,12 +56,12 @@ private:
     Corridor* corridor;          //the corridor of the floor
     int floorId;                //
 public:
+    void place(Teacher& teacher);
     Floor(int Ccorr,int Cclass,int floorId);
     ~Floor();
-    Classroom& get_classroom(int);      //take data of the classroom
-    Corridor& get_corridor();   //<<              >>
     void enter(Student& s);
     void print();
+    int get_available_space();      //how much space lefts
 };
 
 //-------------------------------------------------------------------------
@@ -120,9 +124,7 @@ public:
     School(int,int,int,int);
     ~School();
     void enter(Student& s);
-    Floor& get_floor(int i);
-    Schoolyard& get_schoolyard();
-    Stairs& get_stairs();
+    void place(Teacher& );          //place a teacher to the classroom
     void print();
 
 };
