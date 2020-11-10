@@ -80,7 +80,7 @@ Schoolyard::~Schoolyard(){
 }
 
 void Schoolyard::enter(Student& s){
-    if(this->students==NULL){       //if space is not allocated
+    if(this->students==NULL){ cout<<"aaaaaa"<<endl;      //if space is not allocated
         students= new Student*[this->capacity];}
     if(this->space==this->capacity)
         return;
@@ -93,19 +93,15 @@ void Schoolyard::enter(Student& s){
     s.setLocation("schoolYard");
 }
 
-Student& Schoolyard::exit(Student& s){
+Student& Schoolyard::exit(){
+    Student* s;
+    s=this->students[space-1];
+    this->students[space-1]=NULL; 
+    --(this->space);
+    cout<<s->getName()<< " Exits Schoolyard!"<<endl;
+    s->setLocation("exited_from_schoolYard");
+    return *s;
     
-    for(int i=0;i<(this->space);i++){       //find student
-        if((*(students[i])).getName()== s.getName()){
-            students[i]=students[space-1];
-            this->space--;
-
-            break;
-        }
-    }
-    cout<<s.getName()<< " Exits Schoolyard!"<<endl;
-    s.setLocation("exited_from_schoolYard");
-    return s;
 }
 
 int Schoolyard::get_available_space(){
@@ -153,18 +149,16 @@ void Stairs::enter(Student& s){
     s.setLocation("Stairs");
 }
 
-Student& Stairs::exit(Student& s){
-    
-    for(int i=0; i<this->space; i++){
-        if((*(students[i])).getName()== s.getName()){
-            students[i]=students[space-1];
-            this->space--;
-            break;
-        }
-    }
-    cout<<s.getName()<< " Exit Stairs!"<<endl;
-    s.setLocation("exited_from_stairs");
-    return s;
+Student& Stairs::exit(){
+        
+    Student* s;
+    s=this->students[space-1];
+    this->students[space-1]=NULL; 
+    (this->space)--;
+
+    cout<<s->getName()<< " Exit Stairs!"<<endl;
+    s->setLocation("exited_from_stairs");
+    return *s;
 }
 
 void Stairs::print(){
@@ -257,18 +251,15 @@ void Corridor::enter(Student& s){
     s.setLocation("Corridor");
 }
 
-Student& Corridor::exit(Student& s){
+Student& Corridor::exit(){
     
-    for(int i=0;i<this->space;i++){
-        if((*(students[i])).getName()== s.getName()){
-            students[i]=students[space-1]; 
-            this->space--;
-            break;
-        }
-    }
-    cout<<s.getName()<< " exits Corridor!"<<endl;
-    s.setLocation("exited_corridor");
-    return s;
+    Student* s;
+    s=this->students[space-1];
+    this->students[space-1]=NULL; 
+    (this->space)--;
+    cout<<s->getName()<< " exits Corridor!"<<endl;
+    s->setLocation("exited_corridor");
+    return *s;
 }
 
 void Corridor::print(){

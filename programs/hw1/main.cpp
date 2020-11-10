@@ -11,8 +11,8 @@ const int N=18;
 
 int main(int argc, char** argv){
     int Cclass=1;//atoi(argv[1]);
-    int Cyard =1;
-    int Cstair=1;//atoi(argv[3]);
+    int Cyard =5;
+    int Cstair=17;//atoi(argv[3]);
     int Ccorr=10;//atoi(argv[4]);
 
 
@@ -40,41 +40,50 @@ int main(int argc, char** argv){
 
 
 
-    int end=1;
+    int end=2;
     int div=18;
-    int b=0;
-
-
+    int temp=0;
+    int counter=0;
+    int i=0;
+    Student* s;
     while(end!=0){
         end=0;
-        int i=rand()%(Cclass*N);
 
-        if(stud[i]->get_location()=="NULL"){
-            if(school.get_schoolyard().get_available_space()>0)
-                school.enter(*(stud[i]));
+        temp=rand()%(Cclass*N);                 //επιλεγω τυχαιο αριθμο που θα μπουνε στο yar
+
+        for(int k=0;k<temp;k++){
+            if(counter+Cclass*N==0)
+                break;
+            
+            i=rand()%(Cclass*N + counter);        //αριθμος μαθητων συνολικος επιλεγω εναν μαθητη
+           
+            if(school.get_schoolyard().get_available_space()>0){
+                 s=stud[i];
+                stud[i]=stud[Cclass*N-1+counter];    //τον βαζω στο τελος για να μην τον ξαναπαρω
+                stud[Cclass*N-1+counter]=s;
+                counter--;
+                school.enter(*s);               //βαζω στο yard τον μαθητη αν χωραει
+                if(school.get_stairs().get_available_space()>0){
+                    s = &(school.get_schoolyard().exit());
+                    school.get_stairs().enter(*s);
+                    if(school.get_floor(s->get_floor()).get_corridor().get_available_space()>0){
+                        s=&(school.get_stairs().exit());
+                        school.get_floor(s->get_floor()).enter(*s);
+                        if(school.get_floor(s->get_floor()).get_classroom(s->get_class()).get_available_space() >= 0 && school.get_floor(s->get_floor()).get_classroom(s->get_class()).get_teacher_in()==false){
+                            s=&(school.get_floor(s->get_floor()).get_corridor().exit());
+                            school.get_floor(s->get_floor()).get_classroom(s->get_class()).enter(*s); 
+                        }
+                    }
+                }
+            }
+            
         }
-        
-        else if(stud[i]->get_location()=="schoolYard"){
-            if(school.get_stairs().get_available_space()>0)
-                school.get_stairs().enter(school.get_schoolyard().exit(*(stud[i]))); 
-        }
 
-        else if(stud[i]->get_location()=="Stairs"){
-            if(school.get_floor(stud[i]->get_floor()).get_corridor().get_available_space()>0)
-                school.get_floor(stud[i]->get_floor()).enter(school.get_stairs().exit(*(stud[i]))); 
-        } 
-
-        else if(stud[i]->get_location()=="Corridor"){
-            if(school.get_floor(stud[i]->get_floor()).get_classroom(stud[i]->get_class()).get_available_space() > 0 && school.get_floor(stud[i]->get_floor()).get_classroom(stud[i]->get_class()).get_teacher_in()==false)
-                school.get_floor(stud[i]->get_floor()).get_classroom(stud[i]->get_class()).enter(school.get_floor(stud[i]->get_floor()).get_corridor().exit(*(stud[i]))); 
-        } 
-       
         for(int i=0;i<3;i++)
             for(int j=0;j<6;j++)
                 end += school.get_floor(i).get_classroom(j).get_available_space();
         
         i=rand()%2;
-        
         if(i==1 && div>=1){
             int floorId,classId;
             int times=rand()%div;
@@ -91,16 +100,17 @@ int main(int argc, char** argv){
         
     if(div==0)
         break;
+
     }
 
 
     school.print();
     
-    for(int i=0;i<Cclass*N;i++)
-        delete stud[i];
+    // for(int i=0;i<Cclass*N;i++)
+    //     delete stud[i];
     
-    for(int i=0;i<N;i++)
-        delete teachers[i];
+    // for(int i=0;i<N;i++)
+    //     delete teachers[i];
 
     
 

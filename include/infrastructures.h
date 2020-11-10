@@ -35,7 +35,7 @@ public:
     ~Corridor();
     int get_available_space();      //how much space lefts
     void enter(Student &s);         //enter a student in the corridor
-    Student& exit(Student &s);      //expell a student from the corridor
+    Student& exit();      //expell a student from the corridor
     void print();
 };
 //----------------------------------------------------------------
@@ -79,7 +79,7 @@ public:
     ~Schoolyard();
     int get_available_space(); //how much space is available in the yard
     void enter(Student& s);
-    Student& exit(Student &s);
+    Student& exit();
     void print();
 };
 //---------------------------------------------------------------
@@ -98,7 +98,7 @@ public:
     Stairs(int Cstairs);
     ~Stairs();
     void enter(Student &s);
-    Student& exit(Student &s);
+    Student& exit();
     int get_available_space();
     void print();
 };

@@ -72,17 +72,17 @@ void Classroom::buildSequences(){
 
 void Classroom::connect(Classroom& classroom){
 
-    Classroom* temp=this->pointer;
+    Classroom* temp=this;
 
     if(this->pointer==NULL){
         this->pointer= &classroom;
         this->pointer->pointer=this;     //circular list
     }
     else{
-        while(temp != this)
+        while(temp->pointer != this)
             temp=temp->pointer;
-    temp=&classroom;
-    temp->pointer=this;
+    temp->pointer= &classroom;
+        temp->pointer->pointer=this;     //circular list
     }      
         
 }
@@ -124,25 +124,26 @@ void Classroom::restoreQuietness(){
 
     for(int i=0;i<temp;i++){
         if(this->couples[i].get_student(0).is_naughty()==true && this->couples[i].get_student(1).is_naughty()==true ){
-            seq++;
+            seq++;      //αν εχουμε συνεχομενες ακολουθιες που κανουν αταξιες
             tom++;
         }
         else if((this->couples[i].get_student(0).is_naughty()==false && this->couples[i].get_student(1).is_naughty()==true)
         ||(this->couples[i].get_student(0).is_naughty()==true && this->couples[i].get_student(1).is_naughty()==false))
             seq=0;
+        
     }
 
 
     for(int i=0;i<temp;i++){        //check every couple
 
-        if(this->couples[i].get_student(0).is_naughty()==true && this->couples[i].get_student(1).is_naughty()==false){
+        if(this->couples[i].get_student(0).is_naughty()==true && this->couples[i].get_student(1).is_naughty()==false){  //if one out of two kids is naughty
             
-            random=rand()%temp;
+            random=rand()%temp;     //choose a random,same gender kid to swap
             while(random==i)
                 random=rand()%temp;
             
             if(this->couples[random].get_student(0).studentGender()==this->couples[i].get_student(0).studentGender()){
-                s=&(this->couples[random].get_student(0));
+                s=&(this->couples[random].get_student(0));  cout<<"RANDOM/SAME: "<<random<<endl;
                 this->couples[i].get_student(0).make_naughty(false);
                 this->couples[random].set_student(this->couples[i].get_student(0),0);
                 this->couples[i].set_student(*s,0);
@@ -150,20 +151,20 @@ void Classroom::restoreQuietness(){
             }
             else{
                 s=&(this->couples[random].get_student(1));
-                
+                cout<<"RANDOM/SAME: "<<random<<endl;
                 this->couples[i].get_student(0).make_naughty(false);
                 this->couples[random].set_student(this->couples[i].get_student(0),1);
                 this->couples[i].set_student(*s,0);
                 s->make_naughty(false);
             }          
-            return;
+            continue;
         }else if(this->couples[i].get_student(1).is_naughty()==true && this->couples[i].get_student(0).is_naughty()==false){
              random=rand()%temp;
             while(random==i)
                 random=rand()%temp;
             
             if(this->couples[random].get_student(0).studentGender()==this->couples[i].get_student(1).studentGender()){
-                s=&(this->couples[random].get_student(0));
+                s=&(this->couples[random].get_student(0));cout<<"RANDOM/SAME: "<<random<<endl;
                 this->couples[i].get_student(1).make_naughty(false);
                 this->couples[random].set_student(this->couples[i].get_student(1),0);
                 this->couples[i].set_student(*s,1);
@@ -171,20 +172,20 @@ void Classroom::restoreQuietness(){
             }
             else{
                 s=&(this->couples[random].get_student(1));
-                
+                cout<<"RANDOM/SAME: "<<random<<endl;
                 this->couples[i].get_student(1).make_naughty(false);
                 this->couples[random].set_student(this->couples[i].get_student(1),1);
                 this->couples[i].set_student(*s,1);
                 s->make_naughty(false);
             }      
-            return;    
+            continue;    
         }else if((tom>0 &&tom<=2 )&& (this->couples[i].get_student(0).is_naughty()==true &&this->couples[i].get_student(1).is_naughty()==true)){
             random=rand()%temp;
             while(random==i)
                 random=rand()%temp;
 
             if(this->couples[random].get_student(0).studentGender()==this->couples[i].get_student(0).studentGender()){
-                s=&(this->couples[random].get_student(0));
+                s=&(this->couples[random].get_student(0));cout<<"RANDOM/SAME: "<<random<<endl;
                 this->couples[i].get_student(0).make_naughty(false);
                 this->couples[random].set_student(this->couples[i].get_student(0),0);
                 this->couples[i].set_student(*s,0);
@@ -192,7 +193,7 @@ void Classroom::restoreQuietness(){
             }
             else{
                 s=&(this->couples[random].get_student(1));
-                
+                cout<<"RANDOM/SAME: "<<random<<endl;
                 this->couples[i].get_student(0).make_naughty(false);
                 this->couples[random].set_student(this->couples[i].get_student(0),1);
                 this->couples[i].set_student(*s,0);
@@ -203,7 +204,7 @@ void Classroom::restoreQuietness(){
             while(random==i)
                 random=rand()%temp;
             if(this->couples[random].get_student(0).studentGender()==this->couples[i].get_student(1).studentGender()){
-                s=&(this->couples[random].get_student(0));
+                s=&(this->couples[random].get_student(0));cout<<"RANDOM/SAME: "<<random<<endl;
                 this->couples[i].get_student(1).make_naughty(false);
                 this->couples[random].set_student(this->couples[i].get_student(1),0);
                 this->couples[i].set_student(*s,1);
@@ -211,18 +212,19 @@ void Classroom::restoreQuietness(){
             }
             else{
                 s=&(this->couples[random].get_student(1));
-                
+               cout<<"RANDOM/SAME: "<<random<<endl;
                 this->couples[i].get_student(1).make_naughty(false);
                 this->couples[random].set_student(this->couples[i].get_student(1),1);
                 this->couples[i].set_student(*s,1);
                 s->make_naughty(false);
             }
-        }else if((tom>2) && (this->couples[i].get_student(0).is_naughty()==true &&this->couples[i].get_student(1).is_naughty()==true)){
+        }else if((tom>2 && seq==0) && (this->couples[i].get_student(0).is_naughty()==true &&this->couples[i].get_student(1).is_naughty()==true)){
             random=rand()%temp;
 
 
             if(this->pointer->couples[random].get_student(0).studentGender()==this->couples[i].get_student(0).studentGender()){
                 s=&(this->pointer->couples[random].get_student(0));
+                cout<<"RANDOM/DIFF: "<<random<<endl;
                 this->couples[i].get_student(0).make_naughty(false);
                 this->pointer->couples[random].set_student(this->couples[i].get_student(0),0);
                 this->couples[i].set_student(*s,0);
@@ -230,7 +232,7 @@ void Classroom::restoreQuietness(){
             }
             else{
                 s=&(this->pointer->couples[random].get_student(1));
-                
+                cout<<"RANDOM/DIFF: "<<random<<endl;
                 this->couples[i].get_student(0).make_naughty(false);
                 this->pointer->couples[random].set_student(this->couples[i].get_student(0),1);
                 this->couples[i].set_student(*s,0);
@@ -241,6 +243,7 @@ void Classroom::restoreQuietness(){
  
             if(this->pointer->couples[random].get_student(0).studentGender()==this->couples[i].get_student(1).studentGender()){
                 s=&(this->pointer->couples[random].get_student(0));
+                cout<<"RANDOM/DIFF: "<<random<<endl;
                 this->couples[i].get_student(1).make_naughty(false);
                 this->pointer->couples[random].set_student(this->couples[i].get_student(1),0);
                 this->couples[i].set_student(*s,1);
@@ -248,7 +251,7 @@ void Classroom::restoreQuietness(){
             }
             else{
                 s=&(this->pointer->couples[random].get_student(1));
-                
+                cout<<"RANDOM/DIFF: "<<random<<endl;
                 this->couples[i].get_student(1).make_naughty(false);
                 this->pointer->couples[random].set_student(this->couples[i].get_student(1),1);
                 this->couples[i].set_student(*s,1);
@@ -257,12 +260,80 @@ void Classroom::restoreQuietness(){
 
 
 
+        }else if(seq!=0 && this->couples[i].get_student(0).is_naughty()==true){     //Αφου ειναι ζευγαρι δεν εχει σημασια αν θα ειναι ο πρωτος ή ο δευτερος
+            int cntr=1;
+            int rnd=0;
+            Classroom* next;
+            next=this->pointer;
+            while(next->pointer != this){
+                next=next->pointer;
+                cntr++;
+            }
+            next=this->pointer;
+            cout<<"cntr is: "<<cntr<<endl;
+            rnd=rand()%cntr;
+            while(rnd == 0)
+                rnd=rand()%cntr;
+            cout<<"RND IS*****************************>>>"<<rnd<<endl;
+            while((rnd--) != 1 )
+                next=next->pointer;           
+
+
+            random=rand()%temp;
+
+            if(next->couples[random].get_student(0).studentGender()==this->couples[i].get_student(0).studentGender()){
+                s=&(next->couples[random].get_student(0));
+                cout<<"RANDOM/DIFF: "<<random<<endl;
+                this->couples[i].get_student(0).make_naughty(false);
+                next->couples[random].set_student(this->couples[i].get_student(0),0);
+                this->couples[i].set_student(*s,0);
+                s->make_naughty(false);
+            }
+            else{
+                s=&(next->couples[random].get_student(1));
+                cout<<"RANDOM/DIFF: "<<random<<endl;
+                this->couples[i].get_student(0).make_naughty(false);
+                next->couples[random].set_student(this->couples[i].get_student(0),1);
+                this->couples[i].set_student(*s,0);
+                s->make_naughty(false);
+            }
+            
+            next=this->pointer;
+            rnd=rand()%cntr;
+            while(rnd == 0)
+                rnd=rand()%cntr;
+            cout<<"RND IS*****************************>>>"<<rnd<<endl;
+            while((rnd--) != 1 )
+                next=next->pointer;
+
+            random=rand()%temp;
+ 
+            if(next->couples[random].get_student(0).studentGender()==this->couples[i].get_student(1).studentGender()){
+                s=&(next->couples[random].get_student(0));
+                cout<<"RANDOM/DIFF: "<<random<<endl;
+                this->couples[i].get_student(1).make_naughty(false);
+                next->couples[random].set_student(this->couples[i].get_student(1),0);
+                this->couples[i].set_student(*s,1);
+                s->make_naughty(false);
+            }
+            else{
+                s=&(next->couples[random].get_student(1));
+                cout<<"RANDOM/DIFF: "<<random<<endl;
+                this->couples[i].get_student(1).make_naughty(false);
+                next->couples[random].set_student(this->couples[i].get_student(1),1);
+                this->couples[i].set_student(*s,1);
+                s->make_naughty(false);
+            }
+
+
         }
 
         
 
 
-
+    cout<<"==========================================="<<endl;
+    this->printSequences();
+    cout<<"==========================================="<<endl;
 
     }
 
