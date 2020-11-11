@@ -28,45 +28,7 @@ public:
     // ~Student();              
 
 };
-//--------------------------------------------------------------
 
-// struct Couples{
-
-// private:
-//     Student* s[2];      //array to store 2 students
-    
-// public:
-//     void set_student(Student& s, int pos){      //set students, pos must be either 0 or 1
-//         this->s[pos]=&s;
-//     }
-
-//     Student& get_student(int pos);              //get student from the position given(0 or 1)
-// };
-// //--------------------------------------------------------------
-
-// class Classroom{
-
-// private:
-//     int naughtyCounter;         //counter 
-//     Student** students;         //array to store students
-//     int Cclass;                 //classroom capacity
-//     int id;                     //classroom id
-//     Couples* couples;           //array from couples
-//     Classroom* pointer; //point to an other classroom, usefull for sequences        //connections with the classroom
-//     int space;                  //how many students are in the class
-
-// public:
-//     Classroom(int Cclass);      //constructor
-//     // ~Classroom();
-//     void buildSequences();  //Build sequences among students
-//     void connect(Classroom& classroom); //Connect classrooms
-//     void restoreQuietness();    //restore quietness
-//     void printSequences();      //print sequences
-//     void place(Student& s);     //place students to their classroom
-
-
-// };
-//--------------------------------------------------------------
 struct Couples{
          Student* s[2];      //array to store 2 students
 };
@@ -74,6 +36,8 @@ struct Couples{
 class Sequence{
 
 private:
+    float Tquiet;
+    float Tmessy;
     int couplesNumber;
     int id;
     Sequence* next;
@@ -82,15 +46,16 @@ private:
     int CounterGirl;
     int tempBoy;
     int tempGirl;
-    int** make_array(Student** students,int capacity,int number);
+    int naughtyCounter;
     void add_student(Student& s);
     void restoreQuitness();
     
 
 public:
-    Sequence(int number);
-    Sequence(Student** students,int capacity,int number);
+    Sequence(Student** students,int number,float Tquiet=0,float Tmessy=0);
+    void connect(Sequence& sequence);
     void restore();
+    void printSequence();
     void print();   
 
 };
