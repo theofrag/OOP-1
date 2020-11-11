@@ -1,13 +1,16 @@
 #include "hw2.h"
+#include <ctime>
+#include <cstdlib>  
 
 
 
 int main(void){
     const int temp=10;
-
-    
-    Student*** s;
+    int L=1;
     int K=5;
+    srand(time(nullptr));
+    Student*** s;
+    
   s= new Student**[K];
   for(int i=0;i<K;i++){
     s[i]=new Student* [temp];}
@@ -48,20 +51,31 @@ int main(void){
    cout<<"----------------------------------"<<endl;
    cout<<"----------------------------------"<<endl;
    cout<<"----------------------------------"<<endl;
-   cout<<"----------------------------------"<<endl;
-   cout<<"----------------------------------"<<endl;
-    // s[0][0]->make_naughty(true);
-    // s[0][5]->make_naughty(true);
 
-    s[0][1]->make_naughty(true);
-    s[0][6]->make_naughty(true);
+    
+    int randomGenerator;
+    for(int i=0;i<L;i++){
+        int r1,r2;
+        randomGenerator= rand()%(K*temp);
+        for(int j=0;j<randomGenerator;j++){
+            r1=rand()%K;
+            r2=rand()%temp;
+            if(s[r1][r2]->is_naughty()==true)
+                continue;
 
-    s[0][3]->make_naughty(true);
-    s[0][8]->make_naughty(true);
-
-
-
+            s[r1][r2]->make_naughty(true);
+            cout<<" Student :  "<<s[r1][r2]->studentName()<<"  is naughty"<<endl;
+        }
+    cout<<"----------------------------------"<<endl;
+    cout<<"----------------------------------"<<endl;
     seq[0]->restore();
+
+    }
+
+
+
+
+
 //    s[0]->make_naughty(true);
 //    s[7]->make_naughty(true);
 //    s[21]->make_naughty(true);

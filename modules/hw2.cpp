@@ -147,7 +147,7 @@ void Sequence::restoreQuitness(){
     for(int i=0;i<this->couplesNumber;i++){
 
         if(this->couples[i].s[0]->is_naughty()==true && this->couples[i].s[1]->is_naughty()==false){  //if one out of two kids is naughty
-            
+            cout<<"Student : "<<this->couples[i].s[0]->studentName()<<" changed position"<<endl;
             random=rand()%this->couplesNumber;     //choose a random,same gender kid to swap
             while(random==i)
                 random=rand()%this->couplesNumber;
@@ -177,7 +177,7 @@ void Sequence::restoreQuitness(){
             continue;
         }
         else if(this->couples[i].s[1]->is_naughty()==true && this->couples[i].s[0]->is_naughty()==false){  //if one out of two kids is naughty
-            
+            cout<<"Student : "<<this->couples[i].s[1]->studentName()<<" changed position"<<endl;
             random=rand()%this->couplesNumber;     //choose a random,same gender kid to swap
             while(random==i)
                 random=rand()%this->couplesNumber;
@@ -207,7 +207,8 @@ void Sequence::restoreQuitness(){
             continue;
         }
         else if((tom>0 &&tom<=2 )&& (this->couples[i].s[0]->is_naughty()==true &&this->couples[i].s[1]->is_naughty()==true)){
-
+            cout<<"Student : "<<this->couples[i].s[0]->studentName()<<" changed position"<<endl;
+            
             random=rand()%this->couplesNumber;
             while(random==i)
                 random=rand()%this->couplesNumber;
@@ -234,6 +235,7 @@ void Sequence::restoreQuitness(){
                 this->printSequence();
                 cout<<"--------------------"<<endl;
             }
+            cout<<"Student : "<<this->couples[i].s[1]->studentName()<<" changed position"<<endl;
 
             random=rand()%this->couplesNumber;
             while(random==i)
@@ -263,20 +265,24 @@ void Sequence::restoreQuitness(){
             }
             
         }
-        else if((tom>2 && counter==1) && (this->couples[i].s[0]->is_naughty()==true &&this->couples[i].s[1]->is_naughty()==true)){      //ΔΕΝ ΔΟΥΛΕΥΕΥ Η ΣΥΝΘΗΚΗ( tom>2 && seq==0)
-           cout<<"############################################33"<<endl;
-            random=rand()%this->next->couplesNumber;                                                                                    //ΠΡΟΣΟΧΗ
+        else if((tom>2 && counter==1) && (this->couples[i].s[0]->is_naughty()==true &&this->couples[i].s[1]->is_naughty()==true)){      
+            cout<<"Student : "<<this->couples[i].s[0]->studentName()<<" changed position"<<endl;
+            random=rand()%this->next->couplesNumber;                                                                                    
 
             if(this->couples[random].s[0]->studentGender()==this->couples[i].s[0]->studentGender()){
-                s=(this->next->couples[random].s[0]);  
+                s=(this->next->couples[random].s[0]);
 
                 this->couples[i].s[0]->make_naughty(false);
                 this->next->couples[random].s[0]=this->couples[i].s[0];
                 this->couples[i].s[0]=s;
-                s->make_naughty(false);
                 this->naughtyCounter=this->naughtyCounter+2;
                 this->printSequence();
                 cout<<"--------------------"<<endl;
+                if(s->is_naughty()==true){
+                    this->next->naughtyCounter=this->next->naughtyCounter+2;
+                    cout<<"Student : "<<s->studentName()<<" changed position after replace from a different classroom"<<endl;
+                }
+                s->make_naughty(false);
                 this->next->printSequence();
             }
             else{
@@ -285,25 +291,33 @@ void Sequence::restoreQuitness(){
                 this->couples[i].s[0]->make_naughty(false);
                 this->next->couples[random].s[1]=this->couples[i].s[0];
                 this->couples[i].s[0]=s;
-                s->make_naughty(false);
                 this->naughtyCounter=this->naughtyCounter+2;
                 this->printSequence();
                 cout<<"--------------------"<<endl;
+                if(s->is_naughty()==true){
+                    this->next->naughtyCounter=this->next->naughtyCounter+2;
+                    cout<<"Student : "<<s->studentName()<<" changed position after replace from a different classroom"<<endl;
+                }
+                s->make_naughty(false);
                 this->next->printSequence();
             }
 
             random=rand()%this->next->couplesNumber;
-
+            cout<<"Student : "<<this->couples[i].s[1]->studentName()<<" changed position"<<endl;
             if(this->couples[random].s[0]->studentGender()==this->couples[i].s[1]->studentGender()){
                 s=(this->next->couples[random].s[0]);  
 
                 this->couples[i].s[1]->make_naughty(false);
                 this->next->couples[random].s[0]=this->couples[i].s[1];
                 this->couples[i].s[1]=s;
-                s->make_naughty(false);
                 this->naughtyCounter=this->naughtyCounter+2;
                 this->printSequence();
                 cout<<"--------------------"<<endl;
+                if(s->is_naughty()==true){
+                    this->next->naughtyCounter=this->next->naughtyCounter+2;
+                    cout<<"Student : "<<s->studentName()<<" changed position after replace from a different classroom"<<endl;
+                }
+                s->make_naughty(false);
                 this->next->printSequence();
             }
             else{
@@ -312,16 +326,20 @@ void Sequence::restoreQuitness(){
                 this->couples[i].s[1]->make_naughty(false);
                 this->next->couples[random].s[1]=this->couples[i].s[1];
                 this->couples[i].s[1]=s;
-                s->make_naughty(false);
                 this->naughtyCounter=this->naughtyCounter+2;
                 this->printSequence();
                 cout<<"--------------------"<<endl;
+                if(s->is_naughty()==true){
+                    this->next->naughtyCounter=this->next->naughtyCounter+2;
+                    cout<<"Student : "<<s->studentName()<<" changed position after replace from a different classroom"<<endl;
+                }
+                s->make_naughty(false);
                 this->next->printSequence();
             }
 
         }
         else if((tom>2 && counter == 0)&& this->couples[i].s[0]->is_naughty()==true){       //Αφου ειναι ζευγαρι δεν εχει σημασια αν θα ειναι ο πρωτος ή ο δευτερος
-        cout<<"@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@2"<<endl;
+
             int cntr=1;
             int rnd=0;
             Sequence* pointer;
@@ -340,17 +358,21 @@ void Sequence::restoreQuitness(){
                 pointer=pointer->next;
             
             random=rand()%pointer->couplesNumber;
-            
+            cout<<"Student : "<<this->couples[i].s[0]->studentName()<<" changed position"<<endl;
             if(pointer->couples[random].s[0]->studentGender()==this->couples[i].s[0]->studentGender()){
                 s=(pointer->couples[random].s[0]);  
 
                 this->couples[i].s[0]->make_naughty(false);
                 pointer->couples[random].s[0]=this->couples[i].s[0];
                 this->couples[i].s[0]=s;
-                s->make_naughty(false);
                 this->naughtyCounter=this->naughtyCounter+2;
                 this->printSequence();
                 cout<<"--------------------"<<endl;
+                if(s->is_naughty()==true){
+                    pointer->naughtyCounter=pointer->naughtyCounter+2;
+                    cout<<"Student : "<<s->studentName()<<" changed position after replace from a different classroom"<<endl;
+                }
+                s->make_naughty(false);
                 pointer->printSequence();
             }
             else{
@@ -359,11 +381,16 @@ void Sequence::restoreQuitness(){
                 this->couples[i].s[0]->make_naughty(false);
                 pointer->couples[random].s[1]=this->couples[i].s[0];
                 this->couples[i].s[0]=s;
-                s->make_naughty(false);
                 this->naughtyCounter=this->naughtyCounter+2;
                 this->printSequence();
                 cout<<"--------------------"<<endl;
+                if(s->is_naughty()==true){
+                    pointer->naughtyCounter=pointer->naughtyCounter+2;
+                    cout<<"Student : "<<s->studentName()<<" changed position after replace from a different classroom"<<endl;
+                }
+                s->make_naughty(false);
                 pointer->printSequence();
+                
             }
 
              pointer=this->next;
@@ -375,18 +402,23 @@ void Sequence::restoreQuitness(){
                 pointer=pointer->next;
             
             random=rand()%pointer->couplesNumber;
-
+            cout<<"Student : "<<this->couples[i].s[1]->studentName()<<" changed position"<<endl;
             if(pointer->couples[random].s[0]->studentGender()==this->couples[i].s[1]->studentGender()){
                 s=(pointer->couples[random].s[0]);  
 
                 this->couples[i].s[1]->make_naughty(false);
                 pointer->couples[random].s[0]=this->couples[i].s[1];
                 this->couples[i].s[1]=s;
-                s->make_naughty(false);
                 this->naughtyCounter=this->naughtyCounter+2;
                 this->printSequence();
                 cout<<"--------------------"<<endl;
+                if(s->is_naughty()==true){
+                    pointer->naughtyCounter=pointer->naughtyCounter+2;
+                    cout<<"Student : "<<s->studentName()<<" changed position after replace from a different classroom"<<endl;
+                }
+                s->make_naughty(false);
                 pointer->printSequence();
+                
             }
             else{
                 s=(pointer->couples[random].s[1]);  
@@ -394,10 +426,14 @@ void Sequence::restoreQuitness(){
                 this->couples[i].s[1]->make_naughty(false);
                 pointer->couples[random].s[1]=this->couples[i].s[1];
                 this->couples[i].s[1]=s;
-                s->make_naughty(false);
                 this->naughtyCounter=this->naughtyCounter+2;
                 this->printSequence();
                 cout<<"--------------------"<<endl;
+                if(s->is_naughty()==true){
+                    pointer->naughtyCounter=pointer->naughtyCounter+2;
+                    cout<<"Student : "<<s->studentName()<<" changed position after replace from a different classroom"<<endl;
+                }
+                s->make_naughty(false);
                 pointer->printSequence();
             }
 
