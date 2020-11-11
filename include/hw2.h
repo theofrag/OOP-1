@@ -30,41 +30,70 @@ public:
 };
 //--------------------------------------------------------------
 
-struct Couples{
+// struct Couples{
 
-private:
-    Student* s[2];      //array to store 2 students
+// private:
+//     Student* s[2];      //array to store 2 students
     
-public:
-    void set_student(Student& s, int pos){      //set students, pos must be either 0 or 1
-        this->s[pos]=&s;
-    }
+// public:
+//     void set_student(Student& s, int pos){      //set students, pos must be either 0 or 1
+//         this->s[pos]=&s;
+//     }
 
-    Student& get_student(int pos);              //get student from the position given(0 or 1)
-};
+//     Student& get_student(int pos);              //get student from the position given(0 or 1)
+// };
+// //--------------------------------------------------------------
+
+// class Classroom{
+
+// private:
+//     int naughtyCounter;         //counter 
+//     Student** students;         //array to store students
+//     int Cclass;                 //classroom capacity
+//     int id;                     //classroom id
+//     Couples* couples;           //array from couples
+//     Classroom* pointer; //point to an other classroom, usefull for sequences        //connections with the classroom
+//     int space;                  //how many students are in the class
+
+// public:
+//     Classroom(int Cclass);      //constructor
+//     // ~Classroom();
+//     void buildSequences();  //Build sequences among students
+//     void connect(Classroom& classroom); //Connect classrooms
+//     void restoreQuietness();    //restore quietness
+//     void printSequences();      //print sequences
+//     void place(Student& s);     //place students to their classroom
+
+
+// };
 //--------------------------------------------------------------
+struct Couples{
+         Student* s[2];      //array to store 2 students
+};
 
-class Classroom{
+class Sequence{
 
 private:
-    int naughtyCounter;         //counter 
-    Student** students;         //array to store students
-    int Cclass;                 //classroom capacity
-    int id;                     //classroom id
-    Couples* couples;           //array from couples
-    Classroom* pointer; //point to an other classroom, usefull for sequences        //connections with the classroom
-    int space;                  //how many students are in the class
+    int couplesNumber;
+    int id;
+    Sequence* next;
+    Couples* couples;
+    int counterBoy;
+    int CounterGirl;
+    int tempBoy;
+    int tempGirl;
+    int** make_array(Student** students,int capacity,int number);
+    void add_student(Student& s);
+    void restoreQuitness();
+    
 
 public:
-    Classroom(int Cclass);      //constructor
-    // ~Classroom();
-    void buildSequences();  //Build sequences among students
-    void connect(Classroom& classroom); //Connect classrooms
-    void restoreQuietness();    //restore quietness
-    void printSequences();      //print sequences
-    void place(Student& s);     //place students to their classroom
-
+    Sequence(int number);
+    Sequence(Student** students,int capacity,int number);
+    void restore();
+    void print();   
 
 };
-//--------------------------------------------------------------
+
+
 
