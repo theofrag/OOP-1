@@ -5,9 +5,72 @@
 
 
 int main(void){
+
+//    Student** s;
+//     Student** s1;
+//     Student** s2;
+//     s1=new Student*[9];
+//     s2=new Student*[9];
+//     s=new Student*[9];
+
+//     s[0]=new Student("Boy 0","Boy",0);
+//     s[1]=new Student("Boy 1","Boy",0);
+//     s[2]=new Student("Boy 2","Boy",0);
+//     s[3]=new Student("Boy 3","Boy",0);
+//     s[4]=new Student("Boy 4","Boy",0);
+//     // s[4]=new Student("Girl k","Girl",0);
+//     s[5]=new Student("Girl 0","Girl",0);
+//     s[6]=new Student("Girl 1","Girl",0);
+//     s[7]=new Student("Girl 2","Girl",0);
+//     s[8]=new Student("Girl 3","Girl",0);
+// //----------------
+//     s1[0]=new Student("Boy 5","Boy",1);
+//     s1[1]=new Student("Boy 6","Boy",1);
+//     s1[2]=new Student("Boy 7","Boy",1);
+//     s1[3]=new Student("Boy 8","Boy",1);
+// // s1[4]=new Student("Boy 80","Boy",1);
+//     s1[4]=new Student("Girl 4","Girl",1);
+//     s1[5]=new Student("Girl 5","Girl",1);
+//     s1[6]=new Student("Girl 6","Girl",1);
+//     s1[7]=new Student("Girl 7","Girl",1);
+//     s1[8]=new Student("Girl 8","Girl",1);
+
+//     s2[0]=new Student("Boy 9","Boy",2);
+//     s2[1]=new Student("Boy 10","Boy",2);
+//     s2[2]=new Student("Boy 11","Boy",2);
+//     s2[3]=new Student("Boy 12","Boy",2);
+//     s2[4]=new Student("Boy 13","Boy",2);
+//     // s[4]=new Student("Girl k","Girl",0);
+//     s2[5]=new Student("Girl 9","Girl",2);
+//     s2[6]=new Student("Girl 10","Girl",2);
+//     s2[7]=new Student("Girl 11","Girl",2);
+//     s2[8]=new Student("Girl 12","Girl",2);
+
+//     Sequence seq(s,9);
+//     Sequence seq1(s1,9);
+//     Sequence seq2(s2,9);
+//     seq.connect(seq1);
+//     seq.connect(seq2);
+//     seq.print();
+//     cout<<"###################################################"<<endl;
+
+//     s[0]->make_naughty(true);
+//     s[5]->make_naughty(true);
+
+//     s[1]->make_naughty(true);
+//     s[6]->make_naughty(true);
+
+//     s[2]->make_naughty(true);
+//     s[7]->make_naughty(true);
+    
+    
+//     seq.restore();
+//     seq.print();
+    
+    
     const int temp=10;
     int L=1;
-    int K=5;
+    int K=3;
     srand(time(nullptr));
     Student*** s;
     
@@ -54,7 +117,7 @@ int main(void){
 
     
     int randomGenerator;
-    for(int i=0;i<L;i++){
+    for(int i=0;i<1;i++){
         int r1,r2;
         randomGenerator= rand()%(K*temp);
         for(int j=0;j<randomGenerator;j++){
@@ -72,18 +135,6 @@ int main(void){
 
     }
 
-
-
-
-
-//    s[0]->make_naughty(true);
-//    s[7]->make_naughty(true);
-//    s[21]->make_naughty(true);
-//    s[35]->make_naughty(true);
-//    s[42]->make_naughty(true);
-//    s[56]->make_naughty(true);
-//    sequence.restore();
-//    sequence.print();
 
 
 
