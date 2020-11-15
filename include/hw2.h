@@ -22,7 +22,7 @@ public:
     void make_naughty(bool b){        //make a student naughty
         this->naughty=b;
     }
-    bool is_naughty(){          //if student is naughty or not
+    bool is_naughty(){          //if student is naughty return true ,else false
         return this->naughty;
     }
     // ~Student();              
@@ -30,7 +30,7 @@ public:
 };
 
 struct Couples{
-         Student* s[2];      //array to store 2 students
+         Student* s[2];      //array of pointers to store 2 students
 };
 
 class Sequence{
@@ -38,25 +38,25 @@ class Sequence{
 private:
     float Tquiet;
     float Tmessy;
-    int couplesNumber;
-    int id;
-    Sequence* next;
-    Couples* couples;
-    int counterBoy;
-    int CounterGirl;
-    int tempBoy;
-    int tempGirl;
-    int naughtyCounter;
-    void add_student(Student& s);
-    void restoreQuitness();
+    int couplesNumber;  //how many couples are in the sequence
+    int id;             //sequence id
+    Sequence* next;     //pointer to sequence. Usefull to connect sequences
+    Couples* couples;   //pointer to struct couples
+    int counterBoy;     //how many boys are in the sequence
+    int CounterGirl;    //how many girls are in the sequence
+    int tempBoy;        // 0 or 1 that decides the position of the boy
+    int tempGirl;       //0 or 1 that decides the position of the girl
+    int naughtyCounter;     //measures naughty
+    void add_student(Student& s);   //private function ,which adds a student in the sequence
+    void restoreQuitness();         //private function ,which is called by public restore function
     
 
 public:
-    Sequence(Student** students,int number,float Tquiet=0,float Tmessy=0);
-    void connect(Sequence& sequence);
-    void restore();
-    void printSequence();
-    void print();   
+    Sequence(Student** students,int number,float Tquiet=0,float Tmessy=0);      //constructor
+    void connect(Sequence& sequence);       //connect sequences
+    void restore();             //swap naughty kids. This function calls restoreQuitness() private function
+    void printSequence();       //print only this sequence
+    void print();           //print this sequence and the sequences that are connected with this sequence
 
 };
 
