@@ -15,7 +15,7 @@ Classroom::Classroom(int Cclass,int floorId,int classId){         //classroom co
 
 Classroom::~Classroom(){        //free memory
     cout<<"Classroom to be destroyed"<<endl;
-    delete [] students;
+    delete [] students;         //delete students array, NOT STUDENTS
 }
 
 
@@ -63,7 +63,7 @@ bool Classroom::get_teacher_in(){       //if teacher is in the classroom or not
 
 Schoolyard::Schoolyard(int Cyard){
     this->capacity=Cyard;      //initialize values
-    this->space=0;
+    this->space=0;              //no one is in the schoolyard at first, so space is zero
     this->students=NULL;
     cout<<"A new Schoolyard has been created! "<<endl;
 }
@@ -74,33 +74,33 @@ Schoolyard::~Schoolyard(){
 }
 
 void Schoolyard::enter(Student& s){
-    if(this->students==NULL){      //if space is not allocated
+    if(this->students==NULL){      //if space is not allocated, create the array that holds students depending on the capacity
         students= new Student*[this->capacity];}
-    if(this->space==this->capacity)
+    if(this->space==this->capacity)     //if there is not available space
         return;
     
      
-    students[space]= &s;
-    (this->space)++;
+    students[space]= &s;    //add student at the end
+    (this->space)++;        //increase the counter, that holds information about the current number of students on the yard
     cout<<s.getName()<< " enters schoolyard!"<<endl;
 
-    s.setLocation("schoolYard");
+    s.setLocation("schoolYard");        //set the location of the student, to be "Schoolyard"
 }
 
 Student& Schoolyard::exit(){
     Student* s;
-    s=this->students[space-1];
-    this->students[space-1]=NULL; 
-    --(this->space);
+    s=this->students[space-1];      //take the last student from the array
+    this->students[space-1]=NULL;   //now the array points to nothing
+    --(this->space);                //decrease space counter
     cout<<s->getName()<< " Exits Schoolyard!"<<endl;
-    s->setLocation("exited_from_schoolYard");
+    s->setLocation("exited_from_schoolYard");       //This is a temp location. Stairs can add ONLY students which have exited from yard
     return *s;
     
 }
 
-int Schoolyard::get_available_space(){
+int Schoolyard::get_available_space(){      
 
-    return this->capacity-this->space;
+    return this->capacity-this->space;  //if the function return 0, then there is no available space
 }
 
 void Schoolyard::print(){
@@ -133,7 +133,7 @@ void Stairs::enter(Student& s){
         students= new Student*[this->capacity];}
     if(this->space==this->capacity)
         return ;
-    if(s.get_location()!= "exited_from_schoolYard")
+    if(s.get_location()!= "exited_from_schoolYard") //A student can go on stairs,only if he was at the yard previously
         return;
         
     students[this->space]= &s;
@@ -146,7 +146,7 @@ void Stairs::enter(Student& s){
 Student& Stairs::exit(){
         
     Student* s;
-    s=this->students[space-1];
+    s=this->students[space-1];  //take the last student
     this->students[space-1]=NULL; 
     (this->space)--;
 
@@ -173,10 +173,10 @@ int Stairs::get_available_space(){
 
 void Floor::enter(Student& s){
     Student* stud;
-    if((this->corridor->get_available_space() )> 0 && s.get_location()== "exited_from_stairs"){
-        cout<<s.getName()<<" enters Floor"<<endl;  
+    if((this->corridor->get_available_space() )> 0 && s.get_location()== "exited_from_stairs"){ //a student can enter in the floor, if
+        cout<<s.getName()<<" enters Floor"<<endl;                                                         //he was in stairs previously
         this->corridor->enter(s);
-        if(this->classrooms[s.get_class()]->get_available_space()>0 && this->classrooms[s.get_class()]->get_teacher_in()==false){
+        if(this->classrooms[s.get_class()]->get_available_space()>0 && this->classrooms[s.get_class()]->get_teacher_in()==false){   //add only if there is available space, and no teacher is on the class   
             stud=&(this->corridor->exit());
             this->classrooms[s.get_class()]->enter(*stud);
         }
@@ -187,12 +187,13 @@ void Floor::enter(Student& s){
 void Floor::place(Teacher& s){
     int floorId,classId;
     s.get_data(floorId,classId);
-    this->classrooms[classId]->place(s);
+    this->classrooms[classId]->place(s);    //place teacher in his classroom    
 }
 
 
 
 void Floor::print(){
+    cout<<"Floor number "<<this->floorId<<"  contains: "<<endl;
     this->corridor->print();
     for(int i=0;i<6;i++)
         this->classrooms[i]->print();
@@ -201,11 +202,14 @@ void Floor::print(){
 Floor::Floor(int Ccorr,int Cclass,int floorId){
     this->Ccorr=Ccorr;
     this->Cclass=Cclass;
-    int k=0;
+    this->floorId=floorId;
+    static int k=0;
     for(int i=0;i<6;i++)
-        this->classrooms[i]=new Classroom(this->Cclass,k++,i);
+        this->classrooms[i]=new Classroom(this->Cclass,k,i);
+    k++;
     
     this->corridor=new Corridor(Cclass);
+    cout<<"A new Floor has been created! "<<endl;
     
 }
 
@@ -281,43 +285,43 @@ void Corridor::print(){
 //------------------------------------------------
 
 School ::School(int Cclass,int Cyard,int Cstairs, int Ccorr){   //school constuctor
-    this->Cclass=Cclass;        //capacities 
+    this->Cclass=Cclass;        // initialize capacities 
     this->Cyard=Cyard;
     this->Cstair=Cstairs;
     this->Ccorr=Ccorr;
 
-    for(int i=0;i<3;i++)
+    for(int i=0;i<3;i++)            //create floors
         this->floors[i]=new Floor(Cstairs, Cclass,i);
 
-    this->stairs=new Stairs(Cstairs);
-    this->schoolyard=new Schoolyard(Cyard);
+    this->stairs=new Stairs(Cstairs);   //create stairs
+    this->schoolyard=new Schoolyard(Cyard); //create schoolyard
     cout<<"A new school has been created! "<<endl;
 }
 
-School::~School(){
+School::~School(){      //destructor
     cout<<"A school to be destroyed"<<endl;
 
-    for(int i=0;i<3;i++)
+    for(int i=0;i<3;i++)    //destroy each floor
         delete this->floors[i];
 
-    delete this->stairs;
-    delete this->schoolyard;
+    delete this->stairs;       //destroy stairs
+    delete this->schoolyard;    //destroy schoolyard
 }
 
 
 
 
-void School::enter(Student& s){
+void School::enter(Student& s){     //enter takes 1 student
     Student* stud;
-    if((this->schoolyard->get_available_space())>0){
+    if((this->schoolyard->get_available_space())>0){    //if there is space in scoolyard, add student in school
         cout<<s.getName()<<" enters school"<<endl;
         schoolyard->enter(s);
-        if(this->stairs->get_available_space()>0){
+        if(this->stairs->get_available_space()>0){      //if student is in schoolyard, and there is space in stairs
             stud=&(this->schoolyard->exit());
             this->stairs->enter(*stud);
-            if(this->floors[stud->get_floor()]->get_available_space()>0){
-                stud=&(this->stairs->exit());
-                this->floors[stud->get_floor()]->enter(*stud);
+            if(this->floors[stud->get_floor()]->get_available_space()>0){   //if student is in stairs and there is space in the floor.
+                stud=&(this->stairs->exit());                               //where his class belongs
+                this->floors[stud->get_floor()]->enter(*stud);              //add him in the floor.
             }
             
         }
@@ -325,17 +329,18 @@ void School::enter(Student& s){
     }
 }
 
-void School::place(Teacher& t){
+void School::place(Teacher& t){     //place teacher instantly in his classroom
     int floorId, classId;
-    t.get_data(floorId,classId);
-    this->floors[floorId]->place(t);  
-}
+    t.get_data(floorId,classId);     //in which class the teacher does belongs
+    this->floors[floorId]->place(t);    //first place him in the floor, where his class belongs. Place function from floor, will place him
+}                                           //in his classroom
+
 void School::print(){
     cout<<"School life consists of:  "<<endl;
     this->schoolyard->print();
     this->stairs->print();
     for(int i=0;i< 3;i++){
-        cout<<"Floor number "<<i<<"  contains: "<<endl;
+        // cout<<"Floor number "<<i<<"  contains: "<<endl;
         this->floors[i]->print();  
     }
 }

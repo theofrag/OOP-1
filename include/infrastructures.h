@@ -5,9 +5,9 @@ class Classroom{
 private:
     int floorId,classId;    //classroom data     
     int capacity,space;     //capacity is the max number of students and space show how many students are in the classroom
-    Student** students;     //pointer to an array of pointers, that point to  student classes
-    bool teacherIn;         //if teacher is in class
-    Teacher* teacher;
+    Student** students;     //pointer to an array of pointers, which points to  student classes
+    bool teacherIn;         //if teacher is in class bool== true
+    Teacher* teacher;       // Pointer to a teacher
 
 public:
     Classroom(int Cclass,int floorId,int classId);
@@ -51,10 +51,10 @@ public:
 class Floor{
 
 private:
-    int Ccorr,Cclass;
-    Classroom* classrooms[6];
+    int Ccorr,Cclass;              //holds information about the capacity of the corridor and the capacity of classes
+    Classroom* classrooms[6];       //each floor, forms from 6 classes
     Corridor* corridor;          //the corridor of the floor
-    int floorId;                //
+    int floorId;                //floor number(=0,1,2)
 public:
     void place(Teacher& teacher);
     Floor(int Ccorr,int Cclass,int floorId);
