@@ -15,7 +15,7 @@ OBJS = $(MODULES)/student.o $(MODULES)/infrastructures.o  main.o
 # Το εκτελέσιμο πρόγραμμα
 EXEC = main
 
-ARGS= 10,101,102,103
+ARGS= 1 5 17 10
 
 
 

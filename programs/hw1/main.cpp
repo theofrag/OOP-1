@@ -9,11 +9,11 @@ const int N=18;
 
 
 
-int main(int argc, char** argv){
-    int Cclass=1;//atoi(argv[1]);
-    int Cyard =5;
-    int Cstair=17;//atoi(argv[3]);
-    int Ccorr=10;//atoi(argv[4]);
+int main(int argc, char* argv[]){
+    int Cclass=atoi(argv[1]);
+    int Cyard =atoi(argv[2]);
+    int Cstair=atoi(argv[3]);
+    int Ccorr=atoi(argv[4]);
 
 
     srand(time(nullptr));
