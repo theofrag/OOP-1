@@ -66,6 +66,9 @@ int main(int argc, char** argv){
                 end--;
         }
 
+        if(div==0)      //Αν εχουν μπει όλοι οι καθηγητες στην τάξη τους
+            continue;
+
         i=rand()%2;
         if(i==1 && div>=1){
             int times=rand()%div;
@@ -79,8 +82,8 @@ int main(int argc, char** argv){
             }
         }
         
-    if(div==0)
-        break;
+    // if(div==0)
+    //     break;
 
     }
 
