@@ -12,15 +12,15 @@ private:
 public:
     Classroom(int Cclass,int floorId,int classId);
     ~Classroom();
-    bool get_teacher_in();          //if teacher is in the classroom
-    int get_available_space();     //get capacity shows how much space lefts;  
+    bool get_teacher_in() const;          //if teacher is in the classroom
+    int get_available_space() const;     //get capacity shows how much space lefts;  
     void enter(Student& );          //host a student in the classroom
     void place(Teacher& teacher){
         this->teacher=&teacher;
         this->teacherIn=true;
     }
     
-    void print();                   //print teacher and students
+    void print() const;                   //print teacher and students
 };
 //---------------------------------------------------------------
 //---------------------------------------------------------------
@@ -37,10 +37,10 @@ public:
     // Corridor();     //constructor
     Corridor(int Ccorr);
     ~Corridor();
-    int get_available_space();      //how much space lefts
+    int get_available_space() const;      //how much space lefts
     void enter(Student &s);         //enter a student in the corridor
     Student& exit();      //expell a student from the corridor
-    void print();
+    void print() const;
 };
 //----------------------------------------------------------------
 //---------------------------------------------------------------
@@ -60,8 +60,8 @@ public:
     Floor(int Ccorr,int Cclass,int floorId);
     ~Floor();
     void enter(Student& s);
-    void print();
-    int get_available_space();      //how much space lefts
+    void print() const ;
+    int get_available_space() const;      //how much space lefts
 };
 
 //-------------------------------------------------------------------------
@@ -81,10 +81,10 @@ private:
 public:
     Schoolyard(int Cstairs);   //constructor
     ~Schoolyard();
-    int get_available_space(); //how much space is available in the yard
+    int get_available_space() const; //how much space is available in the yard
     void enter(Student& s);
     Student& exit();
-    void print();
+    void print() const;
 };
 //---------------------------------------------------------------
 //---------------------------------------------------------------
@@ -103,8 +103,8 @@ public:
     ~Stairs();
     void enter(Student &s);
     Student& exit();
-    int get_available_space();
-    void print();
+    int get_available_space() const;
+    void print() const;
 };
 
 //----------------------------------------------
@@ -124,8 +124,9 @@ public:
     School(int,int,int,int);
     ~School();
     void enter(Student& s);
+    void enter(Student** array, int length);
     void place(Teacher& );          //place a teacher to the classroom
-    void print();
+    void print() const;
 
 };
 //---------------------------------------------------------------

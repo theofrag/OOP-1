@@ -25,6 +25,22 @@ public:
     bool is_naughty(){          //if student is naughty return true ,else false
         return this->naughty;
     }
+
+    void print_name() const{
+        cout<<this->name<<endl;
+    }
+
+    void print_class() const{
+        cout<<this->classId<<endl;
+    }
+
+    void print_sex() const{
+        cout<<this->gender<<endl;
+    }
+
+    void print_student() const {
+        cout<<"Student with name: "<<this->name<<" class:"<<this->classId<<" and gender: "<<this->gender<<endl;
+    }
     // ~Student();              
 
 };

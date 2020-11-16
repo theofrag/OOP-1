@@ -2,8 +2,8 @@
 
 
 Classroom::Classroom(int Cclass,int floorId,int classId){         //classroom constuctor
-    this->floorId=floorId;
-    this->classId=classId;
+    this->floorId=floorId;      //represents the floot(from 0-2)
+    this->classId=classId;      //repressents the number of the class (from 0-5)
     this->capacity=Cclass;
     this->space=0;              //no one is inside
     this->teacherIn=false;      //no teacher in the classroom
@@ -19,7 +19,7 @@ Classroom::~Classroom(){        //free memory
 }
 
 
-void Classroom::print(){
+void Classroom::print() const{
 
     cout<<"People in class "<<this->floorId<<"."<<this->classId<<" are: "<<endl;
 
@@ -47,11 +47,11 @@ void Classroom::enter(Student& s){
 
 
 
-int Classroom::get_available_space(){
+int Classroom::get_available_space() const{
     return this->capacity-this->space;
 }
 
-bool Classroom::get_teacher_in(){       //if teacher is in the classroom or not
+bool Classroom::get_teacher_in() const{       //if teacher is in the classroom or not
     return this->teacherIn;
 }
 
@@ -98,12 +98,12 @@ Student& Schoolyard::exit(){
     
 }
 
-int Schoolyard::get_available_space(){      
+int Schoolyard::get_available_space() const{      
 
     return this->capacity-this->space;  //if the function return 0, then there is no available space
 }
 
-void Schoolyard::print(){
+void Schoolyard::print() const{
     cout<<"People in schoolyard are:  "<<endl;
     for(int i=0;i<this->space;i++){
         if(students!=NULL)
@@ -155,13 +155,13 @@ Student& Stairs::exit(){
     return *s;
 }
 
-void Stairs::print(){
+void Stairs::print() const{
     cout<<"People ins stairs are: "<<endl;
     for(int i=0;i< (this->space);i++)
         cout<<students[i]->getName()<<endl;
 }
 
-int Stairs::get_available_space(){
+int Stairs::get_available_space() const{
     return this->capacity-this->space;
 }
 //---------------------------------------------------------------
@@ -192,7 +192,7 @@ void Floor::place(Teacher& s){
 
 
 
-void Floor::print(){
+void Floor::print() const{
     cout<<"Floor number "<<this->floorId<<"  contains: "<<endl;
     this->corridor->print();
     for(int i=0;i<6;i++)
@@ -222,7 +222,7 @@ Floor::~Floor(){
     delete this->corridor;
 }
 
-int Floor::get_available_space(){
+int Floor::get_available_space() const{
     return this->corridor->get_available_space();
 }
 
@@ -243,7 +243,7 @@ Corridor::~Corridor(){
     delete [] students;
 }
 
-int Corridor::get_available_space(){
+int Corridor::get_available_space() const{
     return this->capacity-this->space;
 }
 
@@ -273,7 +273,7 @@ Student& Corridor::exit(){
     return *s;
 }
 
-void Corridor::print(){
+void Corridor::print() const {
     cout<<"People in corridor are: "<<endl;
     for(int i=0; i<this->space;i++)
         cout<<students[i]->getName()<<endl;
@@ -329,20 +329,27 @@ void School::enter(Student& s){     //enter takes 1 student
     }
 }
 
+void School::enter(Student** array, int length){
+
+    for(int i=0;i<length;i++)
+        this->enter(*(array[i]));
+
+    return;
+}
+
 void School::place(Teacher& t){     //place teacher instantly in his classroom
     int floorId, classId;
     t.get_data(floorId,classId);     //in which class the teacher does belongs
     this->floors[floorId]->place(t);    //first place him in the floor, where his class belongs. Place function from floor, will place him
 }                                           //in his classroom
 
-void School::print(){
+void School::print() const{
     cout<<"School life consists of:  "<<endl;
     this->schoolyard->print();
     this->stairs->print();
-    for(int i=0;i< 3;i++){
-        // cout<<"Floor number "<<i<<"  contains: "<<endl;
+    for(int i=0;i< 3;i++)
         this->floors[i]->print();  
-    }
+    
 }
 
 //---------------------------------------------------------------
