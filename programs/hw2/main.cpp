@@ -2,6 +2,13 @@
 #include <ctime>
 #include <cstdlib>  
 
+#include <sstream>
+
+string int_to_string(const string& str, int number) {
+  ostringstream oss;
+  oss << str << number;
+  return oss.str();
+}
 
 
 int main(void){

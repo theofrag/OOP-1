@@ -1,9 +1,13 @@
 #include "infrastructures.h"
 #include <ctime>
 #include <cstdlib>  
+#include <sstream>
 
-
-
+string int_to_string(const string& str, int number) {
+  ostringstream oss;
+  oss << str << number;
+  return oss.str();
+}
 
 const int N=18;     
 
@@ -26,14 +30,15 @@ int main(int argc, char* argv[]){
 
         for(int j=0;j<3;j++){
             for(int k=0;k<6;k++){
-                stud[count]=new Student("student "+ to_string(count),j,k);
-                count++;}
+                stud[count]=new Student(int_to_string("Student ",count),j,k);
+                count++;
+            }
         }
     }
         count=0;
         for(int j=0;j<3;j++){
             for(int k=0;k<6;k++){
-                teachers[count]=new Teacher("Teacher "+ to_string(count),j,k);
+                teachers[count]=new Teacher(int_to_string("Student ",count),j,k);
                 count++;
             }
         }

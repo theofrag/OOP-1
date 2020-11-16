@@ -3,7 +3,7 @@ INCLUDE = ../../include
 MODULES=../../modules
 
 # compiler
-CC = g++
+CC = g++ 
 
 # Compile options. Το -I<dir> λέει στον compiler να αναζητήσει εκεί include files
 CPPFLAGS = -Wall  -g -I$(INCLUDE)

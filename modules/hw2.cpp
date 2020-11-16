@@ -125,8 +125,8 @@ Sequence::Sequence(Student** students,int number,float Tquiet/*=0*/,float Tmessy
     }
 
     for(int i=0;i<this->couplesNumber;i++){ //before the addition of the students initialize the couples array
-        this->couples[i].s[0]= nullptr;
-        this->couples[i].s[1]= nullptr;
+        this->couples[i].s[0]= NULL;
+        this->couples[i].s[1]= NULL;
 
     }
 
@@ -138,11 +138,11 @@ Sequence::Sequence(Student** students,int number,float Tquiet/*=0*/,float Tmessy
 void Sequence::printSequence(){     //print the current sequence
 
     for(int i=0;i<this->couplesNumber;i++){
-        if(this->couples[i].s[0]==nullptr)      //if this place, doesn't point to a student
+        if(this->couples[i].s[0]==NULL)      //if this place, doesn't point to a student
             cout<<"NULL     ";
         else
             cout<<this->couples[i].s[0]->studentName()<<"  and  ";
-        if(this->couples[i].s[1]==nullptr)
+        if(this->couples[i].s[1]==NULL)
             cout<<"NULL"<<endl;
         else
             cout<<this->couples[i].s[1]->studentName()<<endl;
@@ -156,11 +156,11 @@ void Sequence::print(){         //print all the sequences that are linked with t
 
     Sequence* temp=this;
     for(int i=0;i<this->couplesNumber;i++){
-        if(this->couples[i].s[0]==nullptr)
+        if(this->couples[i].s[0]==NULL)
             cout<<"NULL     ";
         else
             cout<<this->couples[i].s[0]->studentName()<<"  and  ";
-        if(this->couples[i].s[1]==nullptr)
+        if(this->couples[i].s[1]==NULL)
             cout<<"NULL"<<endl;
         else
             cout<<this->couples[i].s[1]->studentName()<<endl;
@@ -180,12 +180,12 @@ void Sequence::print(){         //print all the sequences that are linked with t
         cout<<endl;
         for(int i=0;i<temp->next->couplesNumber;i++){
 
-            if(temp->next->couples[i].s[0]==nullptr)
+            if(temp->next->couples[i].s[0]==NULL)
                 cout<<"NULL     ";
             else
                 cout<<temp->next->couples[i].s[0]->studentName()<<"  and  ";
 
-            if(temp->next->couples[i].s[1]==nullptr)
+            if(temp->next->couples[i].s[1]==NULL)
                 cout<<"NULL"<<endl;  
             else
                 cout<<temp->next->couples[i].s[1]->studentName()<<endl;
@@ -203,7 +203,7 @@ void Sequence::print(){         //print all the sequences that are linked with t
 }
 
 void Sequence::restoreQuitness(){       //private function, it swaps students, called by restore function
-    srand(time(nullptr));       //initialize rand
+    srand(time(NULL));       //initialize rand
     int counter=-1;
     int tom=0;
     int random=0;
@@ -211,7 +211,7 @@ void Sequence::restoreQuitness(){       //private function, it swaps students, c
 
     for(int i=0;i<this->couplesNumber;i++){     //first check how many couples are naughty, and if these couples are successively
 
-        if((this->couples[i].s[0]==nullptr)||(this->couples[i].s[1]==nullptr)){
+        if((this->couples[i].s[0]==NULL)||(this->couples[i].s[1]==NULL)){
             if(counter==0){
                 for(int j=i;j<this->couplesNumber;j++){
                     if(this->couples[j].s[0]->is_naughty()==true && this->couples[j].s[1]->is_naughty()==true )
@@ -243,10 +243,10 @@ void Sequence::restoreQuitness(){       //private function, it swaps students, c
 
     for(int i=0;i<this->couplesNumber;i++){
 
-        if((( (this->couples[i].s[1]==nullptr) ||this->couples[i].s[1]->is_naughty()==false)) && (this->couples[i].s[0] != nullptr &&(this->couples[i].s[0]->is_naughty()==true))){  //if one out of two kids is naughty
+        if((( (this->couples[i].s[1]==NULL) ||this->couples[i].s[1]->is_naughty()==false)) && (this->couples[i].s[0] != NULL &&(this->couples[i].s[0]->is_naughty()==true))){  //if one out of two kids is naughty
             cout<<"Student : "<<this->couples[i].s[0]->studentName()<<" changed position"<<endl;    //print msg
             random=rand()%this->couplesNumber;     //choose a random,same gender kid to swap
-            while((random==i) || ((this->couples[random].s[1]==nullptr )|| (this->couples[random].s[0]==nullptr))) 
+            while((random==i) || ((this->couples[random].s[1]==NULL )|| (this->couples[random].s[0]==NULL))) 
                 random=rand()%this->couplesNumber;
             
             if(this->couples[random].s[0]->studentGender()==this->couples[i].s[0]->studentGender()){
@@ -285,10 +285,10 @@ void Sequence::restoreQuitness(){       //private function, it swaps students, c
             }
             continue;
         }
-        else if((( (this->couples[i].s[0]==nullptr) ||this->couples[i].s[0]->is_naughty()==false)) && (this->couples[i].s[1] != nullptr &&(this->couples[i].s[1]->is_naughty()==true))){  //if one out of two kids is naughty
+        else if((( (this->couples[i].s[0]==NULL) ||this->couples[i].s[0]->is_naughty()==false)) && (this->couples[i].s[1] != NULL &&(this->couples[i].s[1]->is_naughty()==true))){  //if one out of two kids is naughty
             cout<<"Student : "<<this->couples[i].s[1]->studentName()<<" changed position"<<endl;
             random=rand()%this->couplesNumber;     //choose a random,same gender kid to swap
-            while((random==i) || (this->couples[random].s[0]==nullptr) || (this->couples[random].s[1]==nullptr))
+            while((random==i) || (this->couples[random].s[0]==NULL) || (this->couples[random].s[1]==NULL))
                 random=rand()%this->couplesNumber;
             
             if(this->couples[random].s[0]->studentGender()==this->couples[i].s[1]->studentGender()){
@@ -328,12 +328,12 @@ void Sequence::restoreQuitness(){       //private function, it swaps students, c
             }
             continue;
         }
-        else if((tom>0 &&tom<=2 )&& ((this->couples[i].s[0]!=nullptr && this->couples[i].s[0]->is_naughty() == true) && (this->couples[i].s[1]!=nullptr && this->couples[i].s[1]->is_naughty()==true))){
+        else if((tom>0 &&tom<=2 )&& ((this->couples[i].s[0]!=NULL && this->couples[i].s[0]->is_naughty() == true) && (this->couples[i].s[1]!=NULL && this->couples[i].s[1]->is_naughty()==true))){
             for(int j=0;j<2;j++){
                 cout<<"Student : "<<this->couples[i].s[j]->studentName()<<" changed position"<<endl;
                 
                 random=rand()%this->couplesNumber;
-                while((random==i) || (this->couples[random].s[0]==nullptr) || (this->couples[random].s[1]==nullptr))
+                while((random==i) || (this->couples[random].s[0]==NULL) || (this->couples[random].s[1]==NULL))
                     random=rand()%this->couplesNumber;
 
                 if(this->couples[random].s[0]->studentGender()==this->couples[i].s[j]->studentGender()){
@@ -373,12 +373,12 @@ void Sequence::restoreQuitness(){       //private function, it swaps students, c
        
             
         }
-        else if((tom>2 && counter==1) && ((this->couples[i].s[0]!=nullptr && this->couples[i].s[0]->is_naughty() == true) && (this->couples[i].s[1]!=nullptr && this->couples[i].s[1]->is_naughty()==true))){ 
+        else if((tom>2 && counter==1) && ((this->couples[i].s[0]!=NULL && this->couples[i].s[0]->is_naughty() == true) && (this->couples[i].s[1]!=NULL && this->couples[i].s[1]->is_naughty()==true))){ 
 
             for(int j=0;j<2;j++){
                 cout<<"Student : "<<this->couples[i].s[j]->studentName()<<" changed position with the next sequence"<<endl;
                 random=rand()%this->next->couplesNumber;
-                while((this->next->couples[random].s[0]==nullptr) || (this->next->couples[random].s[1]==nullptr))                                                                                  
+                while((this->next->couples[random].s[0]==NULL) || (this->next->couples[random].s[1]==NULL))                                                                                  
                     random=rand()%this->next->couplesNumber;
                 if(this->couples[random].s[0]->studentGender()==this->couples[i].s[j]->studentGender()){
                     s=(this->next->couples[random].s[0]);
@@ -418,7 +418,7 @@ void Sequence::restoreQuitness(){       //private function, it swaps students, c
            
 
         }
-        else if((this->couples[i].s[0] !=nullptr && this->couples[i].s[0]->is_naughty()==true) &&(tom>2 && counter == 0)){       //Αφου ειναι ζευγαρι δεν εχει σημασια αν θα ειναι ο πρωτος ή ο δευτερος
+        else if((this->couples[i].s[0] !=NULL && this->couples[i].s[0]->is_naughty()==true) &&(tom>2 && counter == 0)){       //Αφου ειναι ζευγαρι δεν εχει σημασια αν θα ειναι ο πρωτος ή ο δευτερος
             
             for(int j=0;j<2;j++){
                 int cntr=1;
@@ -443,7 +443,7 @@ void Sequence::restoreQuitness(){       //private function, it swaps students, c
                 
                 
                 random=rand()%pointer->couplesNumber;
-                while((pointer->couples[random].s[0]==nullptr) || (pointer->couples[random].s[1]==nullptr))                                                                                  
+                while((pointer->couples[random].s[0]==NULL) || (pointer->couples[random].s[1]==NULL))                                                                                  
                     random=rand()%pointer->couplesNumber;
 
                 cout<<"Student : "<<this->couples[i].s[j]->studentName()<<" changed position with a random sequence"<<endl;
