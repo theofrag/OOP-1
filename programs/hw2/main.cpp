@@ -85,7 +85,7 @@ int main(void){
 //     const int temp=10;
 //     int L=1;
 //     int K=3;
-//     srand(time(nullptr));
+//     srand(time(NULL));
 //     Student*** s;
     
 //   s= new Student**[K];

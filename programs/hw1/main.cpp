@@ -20,7 +20,7 @@ int main(int argc, char* argv[]){
     int Ccorr=atoi(argv[4]);
 
 
-    srand(time(nullptr));
+    srand(time(NULL));
     
     School school(Cclass,Cyard,Cstair,Ccorr);
     Student* stud[N*Cclass];
