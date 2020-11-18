@@ -10,6 +10,10 @@ Student::Student(string name,string gender,int classId){
     this->naughty=false;    //initialize naughty boolean
     }
 
+Student::~Student(){
+    cout<<"I deleted a student"<<endl;
+}
+
 
 string Student::studentName(){      //just return student's name
     return this->name;
@@ -100,7 +104,10 @@ void Sequence::add_student(Student& s){
     }
     
 }
-
+Sequence:: ~Sequence(){
+    delete [] this->couples;
+    
+}
 
 Sequence::Sequence(Student** students,int number,float Tquiet/*=0*/,float Tmessy/*=0*/){    
 

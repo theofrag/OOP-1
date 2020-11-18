@@ -64,6 +64,7 @@ int main(void){
     seq.connect(seq1);
     seq.connect(seq2);
     seq.print();
+    
     cout<<"###################################################"<<endl;
 
     // s[0]->make_naughty(true);

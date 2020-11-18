@@ -16,6 +16,7 @@ private:
 
 public:
     Student(string name,string gender,int classId);     //constructor
+    ~Student(); 
     string studentName();       //return student's name
     string studentGender();     //return student gender
     int classroomId();          //return student's class
@@ -69,6 +70,7 @@ private:
 
 public:
     Sequence(Student** students,int number,float Tquiet=0,float Tmessy=0);      //constructor
+    ~Sequence();
     void connect(Sequence& sequence);       //connect sequences
     void restore();             //swap naughty kids. This function calls restoreQuitness() private function
     void printSequence();       //print only this sequence

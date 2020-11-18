@@ -4,7 +4,7 @@
 #include <sstream>
 
 
-string int_to_string(const string& str, int number) {
+string int_to_string(const string& str, int number) {      
   ostringstream oss;
   oss << str << number;
   return oss.str();
@@ -15,7 +15,7 @@ const int N=18;
 
 
 int main(int argc, char* argv[]){
-    int Cclass=atoi(argv[1]);
+    int Cclass=atoi(argv[1]);       
     int Cyard =atoi(argv[2]);
     int Cstair=atoi(argv[3]);
     int Ccorr=atoi(argv[4]);
@@ -23,11 +23,11 @@ int main(int argc, char* argv[]){
 
     srand(time(NULL));
     
-    School school(Cclass,Cyard,Cstair,Ccorr);
-    Student* stud[N*Cclass];
-    Teacher* teachers[18];
-    int count=0;
-    for(int i=0;i<Cclass;i++){
+    School school(Cclass,Cyard,Cstair,Ccorr);       //create a school
+    Student* stud[N*Cclass];                        //create an array to keep students
+    Teacher* teachers[18];                          //create an array to keep teachers
+    int count=0;                                
+    for(int i=0;i<Cclass;i++){                      // create students and save them to an array
 
         for(int j=0;j<3;j++){
             for(int k=0;k<6;k++){
@@ -88,9 +88,6 @@ int main(int argc, char* argv[]){
             }
         }
         
-    // if(div==0)
-    //     break;
-
     }
 
 
