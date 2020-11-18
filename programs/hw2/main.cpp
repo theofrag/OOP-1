@@ -63,25 +63,29 @@ int main(void){
 
     seq.connect(seq1);
     seq.connect(seq2);
-    seq.print();
+    // seq.print();
     
     cout<<"###################################################"<<endl;
 
-    // s[0]->make_naughty(true);
-    // s[1]->make_naughty(true);
-    // s[2]->make_naughty(true);
+    s[0]->make_naughty(true);
+    s[1]->make_naughty(true);
+    s[2]->make_naughty(true);
 
-    // s[5]->make_naughty(true);
-    // s[6]->make_naughty(true);
-    // s[7]->make_naughty(true);
+    s[5]->make_naughty(true);
+    s[6]->make_naughty(true);
+    s[7]->make_naughty(true);
 
 
 
     
     
-    // seq.restore();
-    // seq.print();
-    
+    seq.restore();
+
+    seq.print();
+    cout<<"-----"<<endl;
+    s[0]->make_naughty(true);
+    seq.restore();
+    seq.print();
     
 //     const int temp=10;
 //     int L=1;

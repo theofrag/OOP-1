@@ -66,6 +66,7 @@ private:
     int naughtyCounter;     //measures naughty
     void add_student(Student& s);   //private function ,which adds a student in the sequence
     void restoreQuitness();         //private function ,which is called by public restore function
+    void increase_counter(Student& s, int number);
     
 
 public:
