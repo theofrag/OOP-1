@@ -93,7 +93,7 @@ int main(int argc, char* argv[]){
 
 
     school.print();  
-    
+        
     for(int i=0;i<Cclass*N;i++)
         delete stud[i];
     

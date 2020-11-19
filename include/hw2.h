@@ -35,7 +35,7 @@ public:
         cout<<this->classId<<endl;
     }
 
-    void print_sex() const{
+    void print_gender() const{
         cout<<this->gender<<endl;
     }
 

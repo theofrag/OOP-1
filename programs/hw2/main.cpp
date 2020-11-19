@@ -74,11 +74,7 @@ int main(void){
     s[5]->make_naughty(true);
     s[6]->make_naughty(true);
     s[7]->make_naughty(true);
-
-
-
-    
-    
+      
     seq.restore();
 
     seq.print();
