@@ -177,8 +177,8 @@ void Floor::enter(Student& s){
         cout<<s.getName()<<" enters Floor"<<endl;                                                         //he was in stairs previously
         this->corridor->enter(s);
         if(this->classrooms[s.get_class()]->get_available_space()>0 && this->classrooms[s.get_class()]->get_teacher_in()==false){   //add only if there is available space, and no teacher is on the class   
-            stud=&(this->corridor->exit());
-            this->classrooms[s.get_class()]->enter(*stud);
+            Student& stud=(this->corridor->exit());
+            this->classrooms[s.get_class()]->enter(stud);
         }
     }
     return;
@@ -312,16 +312,16 @@ School::~School(){      //destructor
 
 
 void School::enter(Student& s){     //enter takes 1 student
-    Student* stud;
+
     if((this->schoolyard->get_available_space())>0){    //if there is space in scoolyard, add student in school
         cout<<s.getName()<<" enters school"<<endl;
         schoolyard->enter(s);
         if(this->stairs->get_available_space()>0){      //if student is in schoolyard, and there is space in stairs
-            stud=&(this->schoolyard->exit());
-            this->stairs->enter(*stud);
-            if(this->floors[stud->get_floor()]->get_available_space()>0){   //if student is in stairs and there is space in the floor.
-                stud=&(this->stairs->exit());                               //where his class belongs
-                this->floors[stud->get_floor()]->enter(*stud);              //add him in the floor.
+            Student& stud=(this->schoolyard->exit());
+            this->stairs->enter(stud);
+            if(this->floors[stud.get_floor()]->get_available_space()>0){   //if student is in stairs and there is space in the floor.
+                Student& stud=(this->stairs->exit());                               //where his class belongs
+                this->floors[stud.get_floor()]->enter(stud);              //add him in the floor.
             }
             
         }

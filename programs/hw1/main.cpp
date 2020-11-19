@@ -91,6 +91,7 @@ int main(int argc, char* argv[]){
     }
 
 
+
     school.print();  
     
     for(int i=0;i<Cclass*N;i++)
@@ -98,7 +99,5 @@ int main(int argc, char* argv[]){
     
     for(int i=0;i<N;i++)
         delete teachers[i];
-
-    
 
 }
