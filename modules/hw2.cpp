@@ -93,7 +93,8 @@ void Sequence::connect(Sequence& sequence){     //connect 2 sequences
 void Sequence::add_student(Student& s){
     
     if(s.studentGender()=="Boy"){  //if student that is about to be added is boy
-
+        if(this->counterBoy==this->couplesNumber)   //Αν παμε να βαλουμε περισσοτερα αγορια απο οσα πρεπει
+            return;
         this->couples[this->counterBoy].s[this->tempBoy]=&s;    //add him
         if(tempBoy==0)
             this->tempBoy=1;
@@ -102,7 +103,8 @@ void Sequence::add_student(Student& s){
         (this->counterBoy)++;       //increace counter
 
     }else{
-
+        if(this->CounterGirl==this->couplesNumber)  //Αν παμε να βαλουμε περισσοτερα κοριτσια απο οσα πρεπει
+            return;
         this->couples[this->CounterGirl].s[this->tempGirl]=&s;
         if(tempGirl==0)
             this->tempGirl=1;
@@ -168,7 +170,7 @@ void Sequence::printSequence(){     //print the current sequence
 
 
 void Sequence::print(){         //print all the sequences that are linked with the current sequence
-    cout<<"%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%"<<this->naughtyCounter<<endl;
+
     Sequence* temp=this;
     for(int i=0;i<this->couplesNumber;i++){
         if(this->couples[i].s[0]==NULL)
@@ -250,16 +252,17 @@ void Sequence::restoreQuitness(){       //private function, it swaps students, c
                     if(this->couples[j].s[0]->is_naughty()==true && this->couples[j].s[1]->is_naughty()==true )
                         counter=1;
                 }
-            }
-            
+            }           
 
         }
     }
+    if(this->next==NULL && tom >=2)    //ΣΕ ΠΕΡΙΠΤΩΣΗ ΠΟΥ ΕΧΟΥΜΕ ΠΑΝΩ ΑΠΟ ΔΥΟ ΑΤΑΚΤΑ ΖΕΥΓΑΡΙΑ ΣΕ ΜΙΑ ΤΑΞΗ, ΑΛΛΑ ΔΕΝ ΕΧΟΥΜΕ ΑΚΟΛΟΥΘΙΑ ΤΜΗΜΑΤΩΝ
+        return;     //ΔΗΛΑΔΗ ΥΠΑΡΧΕΙ ΜΟΝΟ ΜΙΑ ΑΚΟΛΟΥΘΙΑ ΣΥΝΟΛΙΚΑ, ΜΙΑΣ ΚΑΙ ΔΕΝ ΛΕΕΙ ΚΑΤΙ Η ΕΚΦΩΝΗΣΗ, ΚΑΝΩ ΑΠΛΑ RETURN KAI ΔΕΝ ΓΙΝΕΤΑΙ RESTORE
     
 
     for(int i=0;i<this->couplesNumber;i++){ //κοιταω καθε μαθητη σε καθε ζευγαρι, αν ειναι ατακτος
                                             //ή αν το ζευγαρι ειναι ατακτο
-        if((( (this->couples[i].s[1]==NULL) ||this->couples[i].s[1]->is_naughty()==false)) && (this->couples[i].s[0] != NULL &&(this->couples[i].s[0]->is_naughty()==true))){  //if one out of two kids is naughty
+        if((((this->couples[i].s[1]==NULL) ||this->couples[i].s[1]->is_naughty()==false)) && (this->couples[i].s[0] != NULL &&(this->couples[i].s[0]->is_naughty()==true))){  //if one out of two kids is naughty
             cout<<"Student : "<<this->couples[i].s[0]->studentName()<<" changed position"<<endl;    //print msg
             random=rand()%this->couplesNumber;     //choose a random,same gender kid to swap
             while((random==i) || ((this->couples[random].s[1]==NULL )|| (this->couples[random].s[0]==NULL))) 
@@ -458,14 +461,13 @@ void Sequence::restoreQuitness(){       //private function, it swaps students, c
                     pointer=pointer->next;
                     cntr++;
                 }
-
                 pointer=this->next; //produce a random number
-                rnd=rand()%cntr;
-
+                rnd=rand()%(cntr+1);
+            
                 if(cntr != 1){
                     while(rnd == 0)
-                        rnd=rand()%cntr; //poia thesi stin lista
-            
+                        rnd=rand()%(cntr+1); //poia thesi stin lista
+
                     while((rnd--) != 1 )
                         pointer=pointer->next;
                 }
