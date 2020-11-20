@@ -172,7 +172,7 @@ int Stairs::get_available_space() const{
 
 
 void Floor::enter(Student& s){
-    Student* stud;
+
     if((this->corridor->get_available_space() )> 0 && s.get_location()== "exited_from_stairs"){ //a student can enter in the floor, if
         cout<<s.getName()<<" enters Floor"<<endl;                                                         //he was in stairs previously
         this->corridor->enter(s);
@@ -203,10 +203,10 @@ Floor::Floor(int Ccorr,int Cclass,int floorId){
     this->Ccorr=Ccorr;
     this->Cclass=Cclass;
     this->floorId=floorId;
-    static int k=0;
+
     for(int i=0;i<6;i++)
-        this->classrooms[i]=new Classroom(this->Cclass,k,i);
-    k++;
+        this->classrooms[i]=new Classroom(this->Cclass,this->floorId,i);
+
     
     this->corridor=new Corridor(Cclass);
     cout<<"A new Floor has been created! "<<endl;
