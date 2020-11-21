@@ -115,18 +115,18 @@ public:
 class School{
 
 private:
-    int Cclass,Cyard,Cstair,Ccorr;
-    Schoolyard* schoolyard;
-    Floor* floors[3];
-    Stairs* stairs;
+    int Cclass,Cyard,Cstair,Ccorr;  //χωρητικότητες καθε χωρου
+    Schoolyard* schoolyard;         //δεικτης σε προαυλιο
+    Floor* floors[3];               //πίνακας 3 δεικτών σε ορόφους
+    Stairs* stairs;                 //δείκτης σε σκάλες
     
 public:
-    School(int,int,int,int);
-    ~School();
-    void enter(Student& s);
-    void enter(Student** array, int length);
+    School(int,int,int,int);        //constructor
+    ~School();                      //destrucot
+    void enter(Student& s);         //βάζει έναν μαθητή στο σχολείο
+    void enter(Student** array, int length);    //παίρνει έναν πίνακα μαθητών και τον βάζει στο σχολείο
     void place(Teacher& );          //place a teacher to the classroom
-    void print() const;
+    void print() const;             //
 
 };
 //---------------------------------------------------------------

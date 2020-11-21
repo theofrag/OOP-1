@@ -58,7 +58,7 @@ int main(int argc, char* argv[]){
         temp=rand()%(Cclass*N);                 //επιλεγω τυχαιο αριθμο που θα μπουνε στο yar
 
         for(int k=0;k<temp;k++){
-            if(counter+Cclass*N==0)
+            if(counter+Cclass*N==0)             //Αν μπήκαν όλοι οι μαθητες, αυτο θα είναι 0
                 break;
             
             i=rand()%(Cclass*N + counter);        //αριθμος μαθητων συνολικος επιλεγω εναν μαθητη
@@ -67,12 +67,12 @@ int main(int argc, char* argv[]){
                  s=stud[i];
                 stud[i]=stud[Cclass*N-1+counter];    //τον βαζω στο τελος για να μην τον ξαναπαρω
                 stud[Cclass*N-1+counter]=s;
-                counter--;
+                counter--;                      //Για κάθε νέο μαθητή που βάζω, το μειώνω
                 school.enter(*s);               //βαζω στο yard τον μαθητη αν χωραει
                 end--;
         }
 
-        if(div==0)      //Αν εχουν μπει όλοι οι καθηγητες στην τάξη τους
+        if(div==0)      //Αν εχουν μπει όλοι οι καθηγητες στην τάξη τους, πρέπει να ελένξουμε και τους μαθητές
             continue;
 
         i=rand()%2;
@@ -93,7 +93,8 @@ int main(int argc, char* argv[]){
 
 
     school.print();  
-        
+
+//ειναι ευθύνη του χρήστη να αποδεσμεύεσει τους μαθητές και τους δασκάλους
     for(int i=0;i<Cclass*N;i++)
         delete stud[i];
     

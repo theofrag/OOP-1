@@ -42,7 +42,7 @@ void Classroom::enter(Student& s){
     this->space++;
     cout<<s.getName()<< " enters Classroom!"<<endl;
     
-    s.setLocation("Classroom");     //update student location
+    s.setLocation("Classroom");   //update student location
 }
 
 
@@ -291,7 +291,7 @@ School ::School(int Cclass,int Cyard,int Cstairs, int Ccorr){   //school constuc
     this->Ccorr=Ccorr;
 
     for(int i=0;i<3;i++)            //create floors
-        this->floors[i]=new Floor(Cstairs, Cclass,i);
+        this->floors[i]=new Floor(Cstairs, Cclass,i);   //το <i> συμβολίζει τον όροφο(0->πρωτος,1->δευτερος, 2->τριτος)
 
     this->stairs=new Stairs(Cstairs);   //create stairs
     this->schoolyard=new Schoolyard(Cyard); //create schoolyard
@@ -311,7 +311,7 @@ School::~School(){      //destructor
 
 
 
-void School::enter(Student& s){     //enter takes 1 student
+void School::enter(Student& s){     //enter takes 1 student, if there is no capacity, nothing will hapen
 
     if((this->schoolyard->get_available_space())>0){    //if there is space in scoolyard, add student in school
         cout<<s.getName()<<" enters school"<<endl;
@@ -327,6 +327,7 @@ void School::enter(Student& s){     //enter takes 1 student
         }
 
     }
+    return;
 }
 
 void School::enter(Student** array, int length){

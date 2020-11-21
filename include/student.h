@@ -15,6 +15,12 @@ public:
     ~Student();
     void print(){cout<<name<<endl;} //a simple print function
     void setLocation(string location){  //set the location of the student
+
+        if(location !="NULL" && location != "schoolYard" && location != "exited_from_schoolYard" && location != "Stairs" &&
+        location != "exited_from_stairs" &&  location != "Corridor" && location != "exited_corridor" && location != "Classroom" ){
+            cout<<"INVALID LOCATION OF STUDENT   "<<this->name<<endl;
+            return;
+        }
         this->location=location;   
     }
     string getName();   //function to get the name of a student
