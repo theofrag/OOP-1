@@ -39,7 +39,7 @@ int main(int argc, char* argv[]){
         count=0;
         for(int j=0;j<3;j++){
             for(int k=0;k<6;k++){
-                teachers[count]=new Teacher(int_to_string("Student ",count),j,k);
+                teachers[count]=new Teacher(int_to_string("Teacher ",count),j,k);
                 count++;
             }
         }
