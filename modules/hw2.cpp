@@ -4,7 +4,7 @@
 
 //--------------------------------------------------------------
 Student::Student(string name,string gender,int classId){
-    this->name=name;    //initialize name
+    this->name=name;        //initialize name
     this->gender=gender;    //initialize gender
     this->classId=classId;  //initialize clasId
     this->naughty=false;    //initialize naughty boolean
@@ -15,37 +15,37 @@ Student::~Student(){
 }
 
 
-string Student::studentName(){      //just return student's name
+string Student::studentName(){          //just return student's name
     return this->name;
 }
 
-string Student::studentGender(){      //just return student's gender  
+string Student::studentGender(){        //just return student's gender  
     return this->gender;
 }
 
-int Student::classroomId(){             //just return the ID of the classroom that the student belongs
+int Student::classroomId(){             //return the ID of the classroom that the student belongs
     return this->classId;
 }
 //--------------------------------------------------------------
 
-void Sequence::connect(Sequence& sequence){     //Σύνδεση δυο ακολουθιων
+void Sequence::connect(Sequence& sequence){     //Σύνδεση δυο ακολουθιων, της <this> και της <sequence>
       Sequence* temp=this;
       Sequence* link;
 
-    if(this->next==NULL){       //Αν η ακολουθία δεν συνδέεται με άλλες ακολουθίες
-        this->next= &sequence;
+    if(this->next==NULL){                   //Αν η ακολουθία <this> δεν συνδέεται με άλλες ακολουθίες
+        this->next= &sequence;              //συνδεω την <sequence> κατευθειαν
     }
-    else{               //Αν συνδέεται με άλλες ακολουθίες, πάω στο τέλος και την συνδέω εκει
-        while(temp->next != this)
-            temp=temp->next;        //go at the end of the current sequence
-    temp->next= &sequence;          //add the new sequence
-    }
+    else{             //Αν η <this> συνδέεται με άλλες ακολουθίες, πάω στο τέλος της και συνδέω την νέα ακολουθια εκει
+        while(temp->next != this)   //Ξερουμε τον τελευταιο κόμβο, όταν φτάσουμε στο σημείο που το μέλος next, δειχνει στην αρχη πάλι
+            temp=temp->next;        
+    temp->next= &sequence;          
+    }   
 //Τα παρακάτω βήματα, καλύπτουν και την περίπτωση που η ακολουθία που μόλις συνδέσαμε να συνδεόταν
 //και με άλλες ακολουθίες
 
-    temp=temp->next;                //Πάω στον  πρώτο κόμβο της ακολουθίας που μόλις συνδέθηκε <sequence> και
-    link=temp;                                              //κρατάω έναν pointer σε αυτό τον κόμβο
-// Αν η ακολουθία που μόλις συνδέθηκε, συνδεόταν και με άλλες ακολουθίες, επείδη εχουμε κυκλικές λίστες
+    temp=temp->next;  //Πάω στον  πρώτο κόμβο της ακολουθίας που μόλις συνδέθηκε <sequence> και κρατάω έναν pointer σε αυτό τον κόμβο
+    link=temp;                     
+// Αν η ακολουθία που μόλις συνδέθηκε(<sequence>) συνδεόταν και με άλλες ακολουθίες, επείδη εχουμε κυκλικές λίστες,
 //το τελευταιο της στοιχειο θα έδειχνε την "αρχη" της. Δηλαδή το <link>
     while(temp->next!=NULL && temp->next != link) {  //Αν τελικά το temp->next είναι null σημαίνει ότι η ακολουθία που μόλις
 //συνδεθηκε, δεν συνδεοταν με άλλες ακολουθιες,γιατί αν συνδεόταν δεν θα ήταν null, αλλά θα έδειχνε πάλι στην αρχή της.
@@ -94,7 +94,7 @@ void Sequence::add_student(Student& s){
     
     if(s.studentGender()=="Boy"){  //Αν ο μαθητης που θα προσθεσουμε ειναι αγορι
         if(this->counterBoy==this->couplesNumber)   //Αν παμε να βαλουμε περισσοτερα αγορια απο οσα πρεπει
-            return;
+            return;     
         this->couples[this->counterBoy].s[this->tempBoy]=&s;    //Βάζουμε το αγορι
         if(tempBoy==0)  //Αν μπήκε στην θέση 0, το επόμενο αγόρι, θα μπει στην θέση 1
             this->tempBoy=1;
@@ -115,7 +115,7 @@ void Sequence::add_student(Student& s){
     
 }
 Sequence:: ~Sequence(){
-    delete [] this->couples;
+    delete [] this->couples;    //delete τον dymanic allocated πίνακα με τα ζευγαρια.
     
 }
 
@@ -123,14 +123,14 @@ Sequence::Sequence(Student** students,int number,float Tquiet/*=0*/,float Tmessy
 
     this->Tmessy=Tmessy;    //initialize values
     this->Tquiet=Tquiet;    //ποσοστο Tquiet
-    this->naughtyCounter=0; //
-    this->next=NULL;        //at first sequence does not point to other sequences
-    this->id=students[0]->classroomId();    //sequence id, is the id of the first student, who will be added
-    this->couples=NULL;     
-    this->counterBoy=0; //counts how many boys are
+    this->naughtyCounter=0; //Αρχικα ο naughtyCounter είναι 0
+    this->next=NULL;        //Αρχικα δεν εχουμε αλλες ακολουθιες συνδεδεμενες
+    this->id=students[0]->classroomId(); //το id της ακολουθιας ειναι το id του πρώτου μαθητη που θα προστεθει, αφου κάθε πινακας που περναμε αναπαριστα μια ταξη
+    this->couples=NULL;    
+    this->counterBoy=0;     //counts how many boys are
     this->CounterGirl=0;    //count how many girls are in the sequence  
-    this->tempBoy=0;    //Καθε αγόρι αρχίζει απο την θέση 0, ενω καθε κοριτσι απο την θεση 1
-    this->tempGirl=1;       //ώστε να είναι εναλλαξ.
+    this->tempBoy=0;    //Καθε αγόρι αρχίζει απο την θέση 0, ενω καθε κοριτσι απο την θεση 1 ώστε να είναι εναλλαξ.
+    this->tempGirl=1;
     
 
     if(number%2==0){    //if the number of students is even
@@ -155,7 +155,7 @@ Sequence::Sequence(Student** students,int number,float Tquiet/*=0*/,float Tmessy
 void Sequence::printSequence(){     //print the current sequence
 
     for(int i=0;i<this->couplesNumber;i++){
-        if(this->couples[i].s[0]==NULL)      //if this place, doesn't point to a student
+        if(this->couples[i].s[0]==NULL)
             cout<<"NULL     ";
         else
             cout<<this->couples[i].s[0]->studentName()<<"  and  ";
@@ -219,10 +219,12 @@ void Sequence::print(){         //print all the sequences that are linked with t
     }
 }
 
-void Sequence::restoreQuitness(){       //private function, it swaps students,it is called by restore function
+void Sequence::restoreQuitness(){  //private function, it swaps students,it is called by restore function
     srand(time(NULL));          //initialize rand
     int counter=-1;             // -1 σημαίνει οτι δεν έχει βρεθει ζευγαρι ακομα.
-                                //  0 σημαινει οτι έχουμε διαδοχικα ζευγαρια. 1 σημαινει οτι δεν εχουμε διαδοχικα ζευγαρια
+                                //  0 σημαινει οτι έχουμε διαδοχικα ζευγαρια
+                                // 1 σημαινει οτι δεν εχουμε διαδοχικα ζευγαρια
+
     int tom=0;                  //μετράει το συνολικο πλήθος των ζευγαριων
     int random=0;               
     Student* s;                 //κραταει έναν μαθητη
@@ -454,8 +456,8 @@ void Sequence::restoreQuitness(){       //private function, it swaps students,it
         else if((this->couples[i].s[0] !=NULL && this->couples[i].s[0]->is_naughty()==true) &&(tom>2 && counter == 0)){       //Αφου ειναι ζευγαρι δεν εχει σημασια αν θα ειναι ο πρωτος ή ο δευτερος
             
             for(int j=0;j<2;j++){
-                int cntr=1;
-                int rnd=0;
+                int cntr=1; //Μετραει ποσες ακολουθιες συνδεονται με την παρουσα ακολουθια
+                int rnd=0;  //κραταει τον τυχαιο αριθμο απο την rands
                 Sequence* pointer;
                 pointer=this->next;
                 while(pointer->next != this){       //μετραω το πληθος των ακολουθιων
@@ -526,29 +528,30 @@ void Sequence::restore(){   //Καλει την restoreSequence για κάθε 
     Sequence* temp=this;
     this->restoreQuitness();
 
-    if(this->next==NULL)
+    if(this->next==NULL)    //Αν η ακολουθια δεν συνδεοταν με καμια αλλη ακολουθια
         return;
 
-    while(temp->next != this){ 
+    while(temp->next != this){ //Κάλεσε επαναληπτικα την restoreQuitness() μέχρι να ξαναβρεθεις στον αρχικο κόμβο
         temp->next->restoreQuitness();
         temp=temp->next;
     }
 }
 
 void Sequence::increase_counter(Student& s, int number){        //βλ. README
+// Απλα μια συναρτηση που αυξανει τον μετρητη naughty counter της ακολουθιας, της ταξης του μαθητη που αντιμετατεθηκε
 
-    Sequence* temp=this;
-    if(this->id == s.classroomId()){
+    Sequence* temp=this;    
+    if(this->id == s.classroomId()){    //Αν ο μαθητης που αντιμετατεθηκε ήταν ήδη στην ακολουθια της ταξης του
         this->naughtyCounter=this->naughtyCounter+ number;
         return;
     }
-    temp=temp->next;
+    temp=temp->next;    //Αν δεν ηταν, ψαξε που ειναι
     while(temp != this){
-        if(temp->id == s.classroomId()){
+        if(temp->id == s.classroomId()){    //Αν τον βρεις, αυξησε τον μετρητη της ακολουθιας της ταξης του
             temp->naughtyCounter= temp->naughtyCounter+ number;
             return;
         }
-        temp=temp->next;
+        temp=temp->next;    //Αν δεν τον βρεις, ψαξε παρακατω
     }
     
 
