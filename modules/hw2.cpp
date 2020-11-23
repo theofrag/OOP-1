@@ -28,23 +28,23 @@ int Student::classroomId(){             //just return the ID of the classroom th
 }
 //--------------------------------------------------------------
 
-void Sequence::connect(Sequence& sequence){     //connect 2 sequences
+void Sequence::connect(Sequence& sequence){     //Σύνδεση δυο ακολουθιων
       Sequence* temp=this;
       Sequence* link;
 
-    if(this->next==NULL){
+    if(this->next==NULL){       //Αν η ακολουθία δεν συνδέεται με άλλες ακολουθίες
         this->next= &sequence;
     }
-    else{
+    else{               //Αν συνδέεται με άλλες ακολουθίες, πάω στο τέλος και την συνδέω εκει
         while(temp->next != this)
             temp=temp->next;        //go at the end of the current sequence
     temp->next= &sequence;          //add the new sequence
     }
-//Τα παρακάτω βήματα, γίνονται για την περίπτωση που η ακολουθία που μόλις συνδέσαμε να συνδεόταν
+//Τα παρακάτω βήματα, καλύπτουν και την περίπτωση που η ακολουθία που μόλις συνδέσαμε να συνδεόταν
 //και με άλλες ακολουθίες
 
-    temp=temp->next;                //Πάω στον  πρώτο κόμβο της ακολουθίας που μόλις συνδέθηκε και
-    link=temp;                      //κρατάω έναν pointer σε αυτό τον κόμβο
+    temp=temp->next;                //Πάω στον  πρώτο κόμβο της ακολουθίας που μόλις συνδέθηκε <sequence> και
+    link=temp;                                              //κρατάω έναν pointer σε αυτό τον κόμβο
 // Αν η ακολουθία που μόλις συνδέθηκε, συνδεόταν και με άλλες ακολουθίες, επείδη εχουμε κυκλικές λίστες
 //το τελευταιο της στοιχειο θα έδειχνε την "αρχη" της. Δηλαδή το <link>
     while(temp->next!=NULL && temp->next != link) {  //Αν τελικά το temp->next είναι null σημαίνει ότι η ακολουθία που μόλις
@@ -57,10 +57,10 @@ void Sequence::connect(Sequence& sequence){     //connect 2 sequences
     temp->next=this;
 
 //Αν ο αριθμός των αγορίων ή των κοριτσίων είναι κατα ένα μεγαλύτερος
-    if(sequence.counterBoy > sequence.CounterGirl){    //if odd number of students     
+    if(sequence.counterBoy > sequence.CounterGirl){    //Αν τα αγόρια είναι περισσότερα απο τα κορίτσια    
         temp=this;
         int index=0;
-        while(temp->next != this){
+        while(temp->next != this){  //Ψάχνω μια ακολουθια που τα κοριτσια είναι περισσότερα
             if((temp->counterBoy < temp->CounterGirl) ){
                 if(sequence.counterBoy%2==0)
                     index=1;
@@ -71,7 +71,7 @@ void Sequence::connect(Sequence& sequence){     //connect 2 sequences
             }
             temp=temp->next;
         }
-    }else if(sequence.counterBoy < sequence.CounterGirl){    //if odd number of students     
+    }else if(sequence.counterBoy < sequence.CounterGirl){         
         temp=this;
         int index=1;
         while(temp->next != this){
@@ -92,13 +92,13 @@ void Sequence::connect(Sequence& sequence){     //connect 2 sequences
 
 void Sequence::add_student(Student& s){
     
-    if(s.studentGender()=="Boy"){  //if student that is about to be added is boy
+    if(s.studentGender()=="Boy"){  //Αν ο μαθητης που θα προσθεσουμε ειναι αγορι
         if(this->counterBoy==this->couplesNumber)   //Αν παμε να βαλουμε περισσοτερα αγορια απο οσα πρεπει
             return;
-        this->couples[this->counterBoy].s[this->tempBoy]=&s;    //add him
-        if(tempBoy==0)
+        this->couples[this->counterBoy].s[this->tempBoy]=&s;    //Βάζουμε το αγορι
+        if(tempBoy==0)  //Αν μπήκε στην θέση 0, το επόμενο αγόρι, θα μπει στην θέση 1
             this->tempBoy=1;
-        else
+        else            //Αν μπήκε στην θέση 1, το επομενο αγορι θα μπει στην θεση 0
             this->tempBoy=0;
         (this->counterBoy)++;       //increace counter
 
@@ -122,15 +122,15 @@ Sequence:: ~Sequence(){
 Sequence::Sequence(Student** students,int number,float Tquiet/*=0*/,float Tmessy/*=0*/){    
 
     this->Tmessy=Tmessy;    //initialize values
-    this->Tquiet=Tquiet;
-    this->naughtyCounter=0;
+    this->Tquiet=Tquiet;    //ποσοστο Tquiet
+    this->naughtyCounter=0; //
     this->next=NULL;        //at first sequence does not point to other sequences
     this->id=students[0]->classroomId();    //sequence id, is the id of the first student, who will be added
-    this->couples=NULL;
+    this->couples=NULL;     
     this->counterBoy=0; //counts how many boys are
     this->CounterGirl=0;    //count how many girls are in the sequence  
-    this->tempBoy=0;    
-    this->tempGirl=1;
+    this->tempBoy=0;    //Καθε αγόρι αρχίζει απο την θέση 0, ενω καθε κοριτσι απο την θεση 1
+    this->tempGirl=1;       //ώστε να είναι εναλλαξ.
     
 
     if(number%2==0){    //if the number of students is even
@@ -188,13 +188,13 @@ void Sequence::print(){         //print all the sequences that are linked with t
     else if(this->naughtyCounter >((this->counterBoy+this->CounterGirl)*this->Tmessy))
         cout<<"What a mess!"<<endl;
     else
-        cout<<"Plese be quiet!"<<endl;
+        cout<<"Please be quiet!"<<endl;
     
     if(this->next==NULL)
         return;
 
-    while(temp->next != this){ 
-        cout<<endl;
+    while(temp->next != this){      //εχουμε κυκλική λίστα, άρα η επανάληψη γίνεται μέχρι να βρεθούμε πάλι στον κόμβο 
+        cout<<endl;                                                                                    //που αρχίσαμε
         for(int i=0;i<temp->next->couplesNumber;i++){
 
             if(temp->next->couples[i].s[0]==NULL)
@@ -215,22 +215,23 @@ void Sequence::print(){         //print all the sequences that are linked with t
             cout<<"What a mess!"<<endl;
          else
             cout<<"Please be quiet!"<<endl;
-        temp=temp->next;
+        temp=temp->next;                //πήγαινε στον επόμενο κόμβο.
     }
 }
 
-void Sequence::restoreQuitness(){       //private function, it swaps students, called by restore function
-    srand(time(NULL));       //initialize rand
-    int counter=-1;
-    int tom=0;
-    int random=0;
-    Student* s;
-//Στις γραμμές 226-257 ελέγχω αν υπάρχουν διαδοχικά ζευγαρια, και γενικα ποσα ζευγαρια υποαρχουν. βλ README
+void Sequence::restoreQuitness(){       //private function, it swaps students,it is called by restore function
+    srand(time(NULL));          //initialize rand
+    int counter=-1;             // -1 σημαίνει οτι δεν έχει βρεθει ζευγαρι ακομα.
+                                //  0 σημαινει οτι έχουμε διαδοχικα ζευγαρια. 1 σημαινει οτι δεν εχουμε διαδοχικα ζευγαρια
+    int tom=0;                  //μετράει το συνολικο πλήθος των ζευγαριων
+    int random=0;               
+    Student* s;                 //κραταει έναν μαθητη
+//ελέγχω αν υπάρχουν διαδοχικά ζευγαρια, και γενικα ποσα ζευγαρια υποαρχουν. βλ README
     for(int i=0;i<this->couplesNumber;i++){     //first check how many couples are naughty, and if these couples are successively
 
-        if((this->couples[i].s[0]==NULL)||(this->couples[i].s[1]==NULL)){
-            if(counter==0){
-                for(int j=i;j<this->couplesNumber;j++){
+        if((this->couples[i].s[0]==NULL)||(this->couples[i].s[1]==NULL)){   //Αν πέσαμε σε θέση που είναι null.
+            if(counter==0){     //Αν έχουμε βρει ζευγάρι πριν
+                for(int j=i;j<this->couplesNumber;j++){ 
                     if(this->couples[j].s[0]->is_naughty()==true && this->couples[j].s[1]->is_naughty()==true )
                         counter=1;
                 }
@@ -238,17 +239,19 @@ void Sequence::restoreQuitness(){       //private function, it swaps students, c
             continue;
         }
         
-        if(this->couples[i].s[0]->is_naughty()==true && this->couples[i].s[1]->is_naughty()==true ){    //if both members of a couple are naughty
-            if(counter==-1) //practically this condition checks if the naughty couples are serial
+        if(this->couples[i].s[0]->is_naughty()==true && this->couples[i].s[1]->is_naughty()==true ){    //Αν έχω άτακτο ζευγαρι
+            if(counter==-1) // Αν ο counter απο -1 γίνει 0, σημαίνει οτι βρήκαμε το ΠΡΩΤΟ ατακτο ζευγάρι
                 counter=0;  
-                  //αν εχουμε συνεχομενες ακολουθιες που κανουν αταξιες
-            tom++;      //counts naughty couples
+
+            tom++;      //μετραει πόσα ατακτα ζευγάρια έχουμε βρει συνολικά
         }
         else if((this->couples[i].s[0]->is_naughty()==false && this->couples[i].s[1]->is_naughty()==true)
         ||(this->couples[i].s[0]->is_naughty()==true && this->couples[i].s[1]->is_naughty()==false)
         || (this->couples[i].s[0]->is_naughty()==false && this->couples[i].s[1]->is_naughty()==false)){
-            if(counter==0){     //if a there is already a naugthy couple
-                for(int j=i;j<this->couplesNumber;j++){
+//Αν έχω ηδη βρει πριν ζευγαρι σημαινει οτι ο counter==0. Επομενως αν βρηκα ΜΗ ΑΤΑΚΤΟ ζευγαρι τώρα, θα πρέπει να ελενξω  αν
+// υπαρχει και άλλο άτακτο ζευγαρι στην συνεχεια. Αν υπάρχει, σημαινει οτι δεν έχουμε διαδοχικά ζευγαρια και ο counter γίνεται 1
+            if(counter==0){     //Αν έχουμε βρει ήδη άτακτο ζευγάρι και ο counter ΔΕΝ ΕΙΝΑΙ 1
+                for(int j=i;j<this->couplesNumber;j++){ //ελέγχω τα υπολοιπα στοιχεια του πινακα για ατακτο ζευγαρι
                     if(this->couples[j].s[0]->is_naughty()==true && this->couples[j].s[1]->is_naughty()==true )
                         counter=1;
                 }
@@ -260,13 +263,13 @@ void Sequence::restoreQuitness(){       //private function, it swaps students, c
         return;     //ΔΗΛΑΔΗ ΥΠΑΡΧΕΙ ΜΟΝΟ ΜΙΑ ΑΚΟΛΟΥΘΙΑ ΣΥΝΟΛΙΚΑ, ΜΙΑΣ ΚΑΙ ΔΕΝ ΛΕΕΙ ΚΑΤΙ Η ΕΚΦΩΝΗΣΗ, ΚΑΝΩ ΑΠΛΑ RETURN KAI ΔΕΝ ΓΙΝΕΤΑΙ RESTORE
     
 
-    for(int i=0;i<this->couplesNumber;i++){ //κοιταω καθε μαθητη σε καθε ζευγαρι, αν ειναι ατακτος
-                                            //ή αν το ζευγαρι ειναι ατακτο
-        if((((this->couples[i].s[1]==NULL) ||this->couples[i].s[1]->is_naughty()==false)) && (this->couples[i].s[0] != NULL &&(this->couples[i].s[0]->is_naughty()==true))){  //if one out of two kids is naughty
-            cout<<"Student : "<<this->couples[i].s[0]->studentName()<<" changed position"<<endl;    //print msg
-            random=rand()%this->couplesNumber;     //choose a random,same gender kid to swap
-            while((random==i) || ((this->couples[random].s[1]==NULL )|| (this->couples[random].s[0]==NULL))) 
-                random=rand()%this->couplesNumber;
+    for(int i=0;i<this->couplesNumber;i++){ //κοιταω καθε μαθητη σε καθε ζευγαρι, αν ειναι ατακτος ή αν το ζευγαρι ειναι ατακτο
+
+        if((((this->couples[i].s[1]==NULL) ||this->couples[i].s[1]->is_naughty()==false)) && (this->couples[i].s[0] != NULL &&(this->couples[i].s[0]->is_naughty()==true))){  //Aν ένας απο τους δύο ειναι ατακτος
+            cout<<"Student : "<<this->couples[i].s[0]->studentName()<<" changed position"<<endl;    //Εκτυπωσε ποιος ειναι
+            random=rand()%this->couplesNumber;     //Διαλεξε εναν τυχαιο μαθητη απο την ιδια ακολουθια, του ιδιου φυλου
+            while((random==i) || ((this->couples[random].s[1]==NULL )|| (this->couples[random].s[0]==NULL))) //αν διαλεξες τον ιδιο μαθητη ή διαλεξες θέση απο δεν υπαρχει μαθητης
+                random=rand()%this->couplesNumber;  //Διαλεξε αλλον.
 
             //Αν το φυλο του τυχαιου μαθητη στην θεση 0 του πινακα, είναι ίδιο με το φύλο του ατακτου μαθητη
             if(this->couples[random].s[0]->studentGender()==this->couples[i].s[0]->studentGender()){
@@ -281,7 +284,7 @@ void Sequence::restoreQuitness(){       //private function, it swaps students, c
                         this->increase_counter(*s,1); //αυξανω τον naughty counter της ταξης του κατα 1
                         cout<<"Student : "<<s->studentName()<<" was naughty and changed position after replace with a naughty kid"<<endl;
                 }
-                s->make_naughty(false); // τον κάνω ήσυχο
+                s->make_naughty(false); // και τον κάνω ήσυχο
 
                 cout<<"^^^^^^^^^^^^^^^^^^^^"<<endl;
             }
@@ -291,11 +294,9 @@ void Sequence::restoreQuitness(){       //private function, it swaps students, c
                 this->increase_counter(*(this->couples[i].s[0]),1);
                 this->couples[random].s[1]=this->couples[i].s[0];
                 this->couples[i].s[0]=s;
-                // this->naughtyCounter++;
                 cout<<"--------------------"<<endl;
                 this->printSequence();
                 if(s->is_naughty()==true){
-                        // this->naughtyCounter++;
                         this->increase_counter(*s,1);
                         cout<<"Student : "<<s->studentName()<<" was naughty and changed position after replace with a naughty kid"<<endl;
                 }
@@ -353,7 +354,7 @@ void Sequence::restoreQuitness(){       //private function, it swaps students, c
             }
             continue;
         }
-        //Ιf there is a naughty couple, but the total of naughty couples is less or equal than 2
+        //Αν υπάρχει ατακτο ζευγαρι, αλλα είναι ή 1 ή 2 κάνω ουσιαστικα ότι και πριν, αλλα και για τους 2 μαθητες.
         else if((tom>0 &&tom<=2 )&& ((this->couples[i].s[0]!=NULL && this->couples[i].s[0]->is_naughty() == true) && (this->couples[i].s[1]!=NULL && this->couples[i].s[1]->is_naughty()==true))){
             for(int j=0;j<2;j++){
                 cout<<"Student : "<<this->couples[i].s[j]->studentName()<<" changed position"<<endl;
@@ -398,8 +399,8 @@ void Sequence::restoreQuitness(){       //private function, it swaps students, c
        
             
         }
-        //if there is naughty couple, but the total of naughty couples is 3 or more
-        //the onlu difference is that we change with students from the next sequence
+        //Αν υπάρχει ατακτο ζευγαρι, αλλα το συνολο των ατακτων ζευγαριων ειναι πάνω απο 2
+        //Κάνω το ίδιο με πριν, με την μόνη διαφορα οτι επιλέγω τυχαιο μαθητη απο την επόμενη ακολουθια
         else if((tom>2 && counter==1) && ((this->couples[i].s[0]!=NULL && this->couples[i].s[0]->is_naughty() == true) && (this->couples[i].s[1]!=NULL && this->couples[i].s[1]->is_naughty()==true))){ 
 
             for(int j=0;j<2;j++){
@@ -449,7 +450,7 @@ void Sequence::restoreQuitness(){       //private function, it swaps students, c
            
 
         }
-
+        //Αν έχω διαδοχικά ζευγαρια κανω ότι και πριν, αλλα αλλάζω με τυχαιο μαθητη απο τυχαια ακολουθια
         else if((this->couples[i].s[0] !=NULL && this->couples[i].s[0]->is_naughty()==true) &&(tom>2 && counter == 0)){       //Αφου ειναι ζευγαρι δεν εχει σημασια αν θα ειναι ο πρωτος ή ο δευτερος
             
             for(int j=0;j<2;j++){
@@ -484,11 +485,9 @@ void Sequence::restoreQuitness(){       //private function, it swaps students, c
                     this->increase_counter(*(this->couples[i].s[j]),2);
                     pointer->couples[random].s[0]=this->couples[i].s[j];
                     this->couples[i].s[j]=s;
-                    // this->naughtyCounter=this->naughtyCounter+2;
                     this->printSequence();
                     cout<<"--------------------"<<endl;
                     if(s->is_naughty()==true){
-                        // pointer->naughtyCounter=pointer->naughtyCounter+2;
                         this->increase_counter(*s,2);
                         cout<<"Student : "<<s->studentName()<<" changed position after replace from a different classroom"<<endl;
                     }
@@ -502,11 +501,9 @@ void Sequence::restoreQuitness(){       //private function, it swaps students, c
                     this->increase_counter(*(this->couples[i].s[j]),2);
                     pointer->couples[random].s[1]=this->couples[i].s[j];
                     this->couples[i].s[j]=s;
-                    // this->naughtyCounter=this->naughtyCounter+2;
                     this->printSequence();
                     cout<<"--------------------"<<endl;
                     if(s->is_naughty()==true){
-                        // pointer->naughtyCounter=pointer->naughtyCounter+2;
                         this->increase_counter(*s,2);
                         cout<<"Student : "<<s->studentName()<<" changed position after replace from a different classroom"<<endl;
                     }
@@ -525,7 +522,7 @@ void Sequence::restoreQuitness(){       //private function, it swaps students, c
 }
 
 
-void Sequence::restore(){
+void Sequence::restore(){   //Καλει την restoreSequence για κάθε ακολουθία που συνδέεται με την this
     Sequence* temp=this;
     this->restoreQuitness();
 
@@ -538,7 +535,7 @@ void Sequence::restore(){
     }
 }
 
-void Sequence::increase_counter(Student& s, int number){
+void Sequence::increase_counter(Student& s, int number){        //βλ. README
 
     Sequence* temp=this;
     if(this->id == s.classroomId()){

@@ -15,6 +15,7 @@ OBJS = $(MODULES)/hw2.o main.o
 # Το εκτελέσιμο πρόγραμμα
 EXEC = main
 
+ARGS= 3 1 0.9 0.1
 
 $(EXEC): $(OBJS)
 	$(CC) $(OBJS) -o $(EXEC) $(LDFLAGS)
