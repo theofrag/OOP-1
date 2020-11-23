@@ -45,6 +45,7 @@ int main(int argc, char* argv[]){
         }
     }
 
+
     
         
 
@@ -82,9 +83,21 @@ int main(int argc, char* argv[]){
     }
 
     seq[0]->print();
+    cout<<endl;
 
+    for(int i=0;i<K;i++){
+        for(int j=0;j<temp;j++)
+            delete s[i][j];
+    }
 
+    for(int i=0;i<K;i++)
+        delete [] s[i];
+    
+    delete [] s;
+    for(int i=0;i<K;i++)
+        delete  seq[i];
 
+    delete [] seq;
 
 
 }

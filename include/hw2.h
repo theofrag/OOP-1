@@ -41,9 +41,7 @@ public:
 
     void print_student() const {
         cout<<"Student with name: "<<this->name<<" class:"<<this->classId<<" and gender: "<<this->gender<<endl;
-    }
-    // ~Student();              
-
+    }         
 };
 
 struct Couples{

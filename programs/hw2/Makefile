@@ -28,4 +28,4 @@ run: $(EXEC)
 	./$(EXEC) $(ARGS)
 
 valgrind: run
-	valgrind ./$(EXEC)
+	valgrind ./$(EXEC) $(ARGS)
