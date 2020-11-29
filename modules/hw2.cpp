@@ -6,7 +6,7 @@
 Student::Student(string name,string gender,int classId){
     this->name=name;        //initialize name
     this->gender=gender;    //initialize gender
-    this->classId=classId;  //initialize clasId
+    this->classId=classId;  //initialize classId
     this->naughty=false;    //initialize naughty boolean
 }
 
@@ -35,8 +35,8 @@ void Sequence::connect(Sequence& sequence){     //Σύνδεση δυο ακολ
     if(this->next==NULL){                   //Αν η ακολουθία <this> δεν συνδέεται με άλλες ακολουθίες
         this->next= &sequence;              //συνδεω την <sequence> κατευθειαν
     }
-    else{             //Αν η <this> συνδέεται με άλλες ακολουθίες, πάω στο τέλος της και συνδέω την νέα ακολουθια εκει
-        while(temp->next != this)   //Ξερουμε τον τελευταιο κόμβο, όταν φτάσουμε στο σημείο που το μέλος next, δειχνει στην αρχη πάλι
+    else{             //Αν η <this> συνδέεται με άλλες ακολουθίες, πάω στο τέλος της λίστας και συνδέω την νέα ακολουθια εκει
+        while(temp->next != this)   //Ξερουμε τον τελευταιο κόμβο, όταν φτάσουμε στο σημείο που το μέλος next, δειχνει στην παλι στην αρχη
             temp=temp->next;        
     temp->next= &sequence;          
     }   
@@ -226,13 +226,13 @@ void Sequence::restoreQuitness(){  //private function, it swaps students,it is c
                                 // 1 σημαινει οτι δεν εχουμε διαδοχικα ζευγαρια
 
     int tom=0;                  //μετράει το συνολικο πλήθος των ζευγαριων
-    int random=0;               
+    int random=0;               //κραταει εναν τυχαιο αριθμο.
     Student* s;                 //κραταει έναν μαθητη
-//ελέγχω αν υπάρχουν διαδοχικά ζευγαρια, και γενικα ποσα ζευγαρια υποαρχουν. βλ README
-    for(int i=0;i<this->couplesNumber;i++){     //first check how many couples are naughty, and if these couples are successively
+//ελέγχω αν υπάρχουν διαδοχικά ζευγαρια, και γενικα ποσα ζευγαρια υπαρχουν. βλ README
+    for(int i=0;i<this->couplesNumber;i++){     //check how many couples are naughty, and if these couples are successively
 
         if((this->couples[i].s[0]==NULL)||(this->couples[i].s[1]==NULL)){   //Αν πέσαμε σε θέση που είναι null.
-            if(counter==0){     //Αν έχουμε βρει ζευγάρι πριν
+            if(counter==0){     //Αν έχουμε βρει ατακτο ζευγάρι πριν
                 for(int j=i;j<this->couplesNumber;j++){ 
                     if(this->couples[j].s[0]->is_naughty()==true && this->couples[j].s[1]->is_naughty()==true )
                         counter=1;
@@ -245,17 +245,17 @@ void Sequence::restoreQuitness(){  //private function, it swaps students,it is c
             if(counter==-1) // Αν ο counter απο -1 γίνει 0, σημαίνει οτι βρήκαμε το ΠΡΩΤΟ ατακτο ζευγάρι
                 counter=0;  
 
-            tom++;      //μετραει πόσα ατακτα ζευγάρια έχουμε βρει συνολικά
+            tom++;      //κρατάει πόσα ατακτα ζευγάρια έχουμε βρει συνολικά
         }
         else if((this->couples[i].s[0]->is_naughty()==false && this->couples[i].s[1]->is_naughty()==true)
         ||(this->couples[i].s[0]->is_naughty()==true && this->couples[i].s[1]->is_naughty()==false)
         || (this->couples[i].s[0]->is_naughty()==false && this->couples[i].s[1]->is_naughty()==false)){
-//Αν έχω ηδη βρει πριν ζευγαρι σημαινει οτι ο counter==0. Επομενως αν βρηκα ΜΗ ΑΤΑΚΤΟ ζευγαρι τώρα, θα πρέπει να ελενξω  αν
-// υπαρχει και άλλο άτακτο ζευγαρι στην συνεχεια. Αν υπάρχει, σημαινει οτι δεν έχουμε διαδοχικά ζευγαρια και ο counter γίνεται 1
-            if(counter==0){     //Αν έχουμε βρει ήδη άτακτο ζευγάρι και ο counter ΔΕΝ ΕΙΝΑΙ 1
+//Αν έχω ηδη βρει πριν ατακτο ζευγαρι σημαινει οτι ο counter==0. Επομενως αν βρηκα ΜΗ ΑΤΑΚΤΟ ζευγαρι τώρα, θα πρέπει να ελενξω  αν
+// υπαρχει και άλλο άτακτο ζευγαρι στην συνεχεια. Αν υπάρχει, σημαινει οτι δεν έχουμε διαδοχικά ζευγαρια και ο counter γίνεται 1.
+            if(counter==0){     //Αν έχουμε βρει ήδη άτακτο ζευγάρι πριν και ο counter ΔΕΝ ΕΙΝΑΙ 1
                 for(int j=i;j<this->couplesNumber;j++){ //ελέγχω τα υπολοιπα στοιχεια του πινακα για ατακτο ζευγαρι
                     if(this->couples[j].s[0]->is_naughty()==true && this->couples[j].s[1]->is_naughty()==true )
-                        counter=1;
+                        counter=1;  //Αν βρω αργοτερα ατακτο ζευγαρι, σημαινει οτι δεν εχω διαδοχικα ατακτα, αλλα διασπαρτα.
                 }
             }           
 
@@ -551,7 +551,7 @@ void Sequence::increase_counter(Student& s, int number){        //βλ. README
             temp->naughtyCounter= temp->naughtyCounter+ number;
             return;
         }
-        temp=temp->next;    //Αν δεν τον βρεις, ψαξε παρακατω
+        temp=temp->next;    //Αν δεν τον βρεις, ψαξε παρακατω στην λίστα.
     }
     
 

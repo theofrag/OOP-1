@@ -176,7 +176,7 @@ void Floor::enter(Student& s){
     if((this->corridor->get_available_space() )> 0 && s.get_location()== "exited_from_stairs"){ //a student can enter in the floor, if
         cout<<s.getName()<<" enters Floor"<<endl;                                                         //he was in stairs previously
         this->corridor->enter(s);
-        if(this->classrooms[s.get_class()]->get_available_space()>0 && this->classrooms[s.get_class()]->get_teacher_in()==false){   //add only if there is available space, and no teacher is on the class   
+        if(this->classrooms[s.get_class()]->get_available_space()>0 && this->classrooms[s.get_class()]->get_teacher_in()==false){   //add only if there is available space, and no teacher is in classroom
             Student& stud=(this->corridor->exit());
             this->classrooms[s.get_class()]->enter(stud);
         }
@@ -331,8 +331,8 @@ void School::enter(Student& s){     //enter takes 1 student, if there is no capa
 }
 
 void School::enter(Student** array, int length){
-
-    for(int i=0;i<length;i++)
+    int i=0;
+    for(i=0;i<length;i++)
         this->enter(*(array[i]));
 
     return;

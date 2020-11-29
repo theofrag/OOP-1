@@ -15,9 +15,9 @@ public:
     bool get_teacher_in() const;          //if teacher is in the classroom
     int get_available_space() const;     //get capacity shows how much space lefts;  
     void enter(Student& );          //host a student in the classroom
-    void place(Teacher& teacher){
+    void place(Teacher& teacher){   //place a teacher to his classroom
         this->teacher=&teacher;
-        this->teacherIn=true;
+        this->teacherIn=true;       //true= teacher in classroom. False = not in clasroom
     }
     
     void print() const;                   //print teacher and students
@@ -33,10 +33,9 @@ private:
     int capacity,space;     //data
     Student** students;     //array of students
 
-public:
-    // Corridor();     //constructor
-    Corridor(int Ccorr);
-    ~Corridor();
+public: 
+    Corridor(int Ccorr);        //constructor
+    ~Corridor();    //destructor
     int get_available_space() const;      //how much space lefts
     void enter(Student &s);         //enter a student in the corridor
     Student& exit();      //expell a student from the corridor
@@ -122,11 +121,11 @@ private:
     
 public:
     School(int,int,int,int);        //constructor
-    ~School();                      //destrucot
+    ~School();                      //destructor
     void enter(Student& s);         //βάζει έναν μαθητή στο σχολείο
     void enter(Student** array, int length);    //παίρνει έναν πίνακα μαθητών και τον βάζει στο σχολείο
     void place(Teacher& );          //place a teacher to the classroom
-    void print() const;             //
+    void print() const;             
 
 };
 //---------------------------------------------------------------

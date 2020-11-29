@@ -44,13 +44,15 @@ public:
     }         
 };
 
-struct Couples{
-         Student* s[2];      //array of pointers to store 2 students
-};
 
 class Sequence{
 
 private:
+
+    struct Couples{
+        Student* s[2];      //array of pointers to store 2 students
+    };
+
     float Tquiet;
     float Tmessy;
     int couplesNumber;  //how many couples are in the sequence
@@ -63,7 +65,7 @@ private:
     int tempGirl;       //0 or 1 that decides the position of the girl
     int naughtyCounter;     //measures naughty
     void add_student(Student& s);   //private function ,which adds a student in the sequence
-    void restoreQuitness();         //private function ,which is called by public restore function
+    void restoreQuitness();         //private function ,which is called by the public restore function
     void increase_counter(Student& s, int number);
     
 
